@@ -274,6 +274,94 @@
   .callout p { font-size: 14.5px; color: #5b4a1a; line-height: 1.65; }
   .callout strong { color: #8B6A00; }
 
+  /* ===== DOWNLOAD BUTTON ===== */
+  .download-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+  .download-btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--body); font-size: 14px; font-weight: 700;
+    background: var(--clay-blue); color: #fff;
+    padding: 12px 22px; border-radius: 50px; text-decoration: none;
+    box-shadow: var(--shadow-btn);
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+  .download-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); color: #fff; }
+  .download-btn:active { transform: translateY(2px); box-shadow: var(--shadow-btn-press); }
+  .download-note { font-size: 13px; color: var(--ink-soft); }
+
+  /* ===== DATA PREVIEW TABLE ===== */
+  .data-preview-wrap {
+    background: var(--clay-white); border-radius: 18px;
+    overflow: auto; box-shadow: var(--shadow-card); margin-bottom: 32px;
+  }
+  .data-preview-bar {
+    background: #F0F0F8; padding: 10px 18px;
+    font-size: 12px; font-weight: 700; color: var(--ink-soft);
+    letter-spacing: 0.06em; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px; }
+  .data-table th {
+    background: rgba(30,79,160,0.07); padding: 10px 14px; text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--clay-blue); border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .data-table td { padding: 9px 14px; border-bottom: 1px solid rgba(30,79,160,0.06); color: var(--ink-soft); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(30,79,160,0.03); }
+  .tag-aktif    { color: #1a7a1a; font-weight: 700; }
+  .tag-luput    { color: var(--clay-red); font-weight: 700; }
+  .tag-akan     { color: #8B5500; font-weight: 700; }
+  .tag-habis    { color: var(--ink-soft); font-weight: 700; }
+  .data-more    { padding: 10px 18px; font-size: 13px; color: var(--ink-soft); text-align: center; border-top: 1px solid var(--line); font-style: italic; }
+
+  /* ===== CHALLENGE CARDS ===== */
+  .challenge-list { display: flex; flex-direction: column; gap: 12px; }
+  .challenge-card {
+    display: block; cursor: pointer; position: relative;
+    background: var(--clay-white); border-radius: 20px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.18s, box-shadow 0.18s;
+    overflow: hidden; user-select: none;
+  }
+  .challenge-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+  .challenge-cb { position: absolute; opacity: 0; pointer-events: none; }
+  .challenge-inner { display: flex; align-items: flex-start; gap: 16px; padding: 20px 24px; }
+  .cb-visual {
+    width: 28px; height: 28px; flex-shrink: 0; margin-top: 3px;
+    border: 2.5px solid rgba(30,79,160,0.25); border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: transparent;
+    transition: background 0.18s, border-color 0.18s, color 0.18s, box-shadow 0.18s;
+  }
+  .challenge-cb:checked + .challenge-inner .cb-visual {
+    background: var(--clay-blue); border-color: var(--clay-blue-deep);
+    color: #fff; box-shadow: 0 2px 0 var(--clay-blue-deep);
+  }
+  .challenge-content { flex: 1; }
+  .challenge-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; flex-wrap: wrap; }
+  .challenge-level {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 11px; border-radius: 50px;
+  }
+  .level-mudah     { background: rgba(26,122,26,0.12); color: #1a6e1a; }
+  .level-sederhana { background: rgba(180,100,0,0.12); color: #8B5000; }
+  .level-mencabar  { background: rgba(211,47,47,0.12); color: var(--clay-red); }
+  .challenge-num   { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+  .challenge-title {
+    font-family: var(--display); font-weight: 700; font-size: 17px;
+    color: var(--ink); margin-bottom: 5px;
+    transition: opacity 0.18s;
+  }
+  .challenge-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+  .challenge-hint {
+    margin-top: 10px; font-size: 13px; color: var(--clay-blue); font-style: italic;
+    padding: 8px 12px; border-left: 3px solid var(--clay-yellow);
+    background: rgba(255,199,44,0.06); border-radius: 0 8px 8px 0;
+  }
+  .challenge-cb:checked + .challenge-inner .challenge-title { text-decoration: line-through; opacity: 0.45; }
+  .challenge-cb:checked + .challenge-inner .challenge-desc  { opacity: 0.45; }
+  .challenge-cb:checked + .challenge-inner .challenge-hint  { opacity: 0.45; }
+
   /* ===== FOOTER ===== */
   footer {
     background: linear-gradient(135deg, var(--clay-blue-deep) 0%, var(--clay-blue) 100%);
@@ -294,6 +382,8 @@
     .bahagian-letter { font-size: 36px; }
     .prompt-grid { grid-template-columns: 1fr; }
     .nav-divider { display: none; }
+    .download-row { flex-direction: column; align-items: flex-start; }
+    .challenge-inner { padding: 16px 16px; }
   }
 </style>
 </head>
@@ -485,17 +575,238 @@ Nota:
   </div>
 </div>
 
-<!-- ===== PLACEHOLDER BAHAGIAN B & C ===== -->
+<!-- ================= BAHAGIAN B ================= -->
 <div id="bahagian-b">
-  <div class="section-wrap" style="text-align:center; padding: 56px 24px;">
-    <div class="eyebrow" style="margin:0 auto 16px;">🔜 Akan Datang</div>
-    <h2 style="margin-bottom:10px;">Bahagian B &amp; C</h2>
-    <p style="color:var(--ink-soft);font-size:16px;max-width:480px;margin:0 auto;">
-      "Main dengan Data Sendiri" dan "Self-Challenge" sedang dalam pembinaan — akan ditambah selepas Bahagian A diuji.
-    </p>
+  <div class="section-wrap">
+
+    <div class="bahagian-header fade-up">
+      <div class="bahagian-letter">B</div>
+      <div class="bahagian-info">
+        <div class="bahagian-karat">Bahagian B — Aktiviti 2 &nbsp;·&nbsp; ±15 minit</div>
+        <h3>Main dengan Data Sendiri</h3>
+        <p>Bawa mana-mana fail data ringkas (Excel, CSV, atau senarai dalam teks biasa) dan biarkan Claude analisa untuk anda — cari trend, anomali, dan buat carta tanpa perlu faham formula Excel yang rumit.</p>
+      </div>
+    </div>
+
+    <!-- Download + preview -->
+    <div class="sample-label fade-up">
+      📂 &nbsp;Guna data sendiri, atau muat turun dataset dummy makmal ini:
+    </div>
+
+    <div class="download-row fade-up">
+      <a class="download-btn" href="assets/dummy-data.csv" download="data-stok-reagen-makmal.csv">
+        ⬇️ &nbsp;Muat Turun Dataset Dummy (CSV)
+      </a>
+      <span class="download-note">data-stok-reagen-makmal.csv &nbsp;·&nbsp; 20 rekod &nbsp;·&nbsp; Stok reagen makmal ITU</span>
+    </div>
+
+    <div class="data-preview-wrap fade-up">
+      <div class="data-preview-bar">📊 &nbsp;PRATONTON DATA — 5 baris pertama (daripada 20)</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Reagen / Bahan</th>
+            <th>Kategori</th>
+            <th>Kuantiti</th>
+            <th>Unit</th>
+            <th>Tarikh Luput</th>
+            <th>Suhu Simpan</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Sodium Chloride 0.9%</td><td>Larutan</td><td>12</td><td>botol</td><td>2026-12-31</td><td>Suhu Bilik</td><td class="tag-aktif">Aktif</td></tr>
+          <tr><td>2</td><td>Formalin 10%</td><td>Larutan Fiksatif</td><td>3</td><td>botol</td><td>2026-06-15</td><td>Suhu Bilik</td><td class="tag-aktif">Aktif</td></tr>
+          <tr><td>3</td><td>Antibodi Anti-Rabies</td><td>Kit Ujian</td><td>0</td><td>kit</td><td>2025-05-01</td><td>2–8°C</td><td class="tag-habis">Tamat Stok</td></tr>
+          <tr><td>4</td><td>ELISA Kit — Brucellosis</td><td>Kit Ujian</td><td>8</td><td>kit</td><td>2026-03-20</td><td>2–8°C</td><td class="tag-aktif">Aktif</td></tr>
+          <tr><td>5</td><td>Methanol</td><td>Pelarut</td><td>5</td><td>botol</td><td>2025-09-05</td><td>Suhu Bilik</td><td class="tag-akan">Akan Luput</td></tr>
+        </tbody>
+      </table>
+      <div class="data-more">… dan 15 rekod lagi. Muat turun CSV untuk data penuh.</div>
+    </div>
+
+    <!-- Prompt templates B -->
+    <div class="step-divider fade-up">3 prompt siap pakai — upload data + copy prompt ke Claude</div>
+
+    <div class="prompt-grid">
+
+      <div class="prompt-card fade-up">
+        <div class="prompt-card-header">
+          <div class="prompt-card-icon">📈</div>
+          <h3>Ringkaskan &amp; Cari Trend</h3>
+          <p class="prompt-desc">Dapatkan gambaran besar data anda dalam satu jawapan — statistik asas dan corak utama.</p>
+        </div>
+        <div class="prompt-card-body">
+          <div class="prompt-box" id="pb-trend">Saya upload fail CSV yang mengandungi data [nyatakan jenis data anda]. Tolong:
+1. Buat ringkasan keseluruhan — berapa baris, apakah lajur utama, apa yang direkodkan
+2. Cari trend atau corak yang menonjol dalam data ini
+3. Nyatakan 3 penemuan paling penting dalam point form
+
+Format: ringkas dan terstruktur. Bahasa: Bahasa Melayu.</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'pb-trend')">
+            <span class="ci">📋</span><span class="ct">Copy Prompt</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="prompt-card fade-up">
+        <div class="prompt-card-header">
+          <div class="prompt-card-icon">🔍</div>
+          <h3>Highlight Anomali</h3>
+          <p class="prompt-desc">Claude flag perkara yang luar biasa atau memerlukan tindakan segera dalam data anda.</p>
+        </div>
+        <div class="prompt-card-body">
+          <div class="prompt-box" id="pb-anomali">Berdasarkan fail CSV yang diupload, senaraikan semua ANOMALI atau perkara yang memerlukan perhatian:
+- Nilai yang luar julat normal atau tidak konsisten
+- Item kritikal yang perlu tindakan segera
+- Rekod yang mencurigakan atau tidak lengkap
+
+Susun mengikut keutamaan (paling kritikal dahulu). Cadangkan tindakan susulan untuk setiap isu. Bahasa: Bahasa Melayu.</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'pb-anomali')">
+            <span class="ci">📋</span><span class="ct">Copy Prompt</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="prompt-card fade-up">
+        <div class="prompt-card-header">
+          <div class="prompt-card-icon">📊</div>
+          <h3>Jana Carta Visual</h3>
+          <p class="prompt-desc">Claude buat carta interaktif dalam Artifact — boleh terus share atau cetak untuk laporan.</p>
+        </div>
+        <div class="prompt-card-body">
+          <div class="prompt-box" id="pb-carta">Berdasarkan data CSV yang diupload, buat kod HTML dalam Artifact yang paparkan:
+1. Carta pai atau bar — pecahan mengikut kategori utama (gunakan Chart.js dari CDN)
+2. Jadual ringkasan yang kemas dengan label dan warna yang jelas
+3. Tajuk laporan dan tarikh di bahagian atas
+
+Warna: guna tema biru dan kuning. Bahasa label: Bahasa Melayu.</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'pb-carta')">
+            <span class="ci">📋</span><span class="ct">Copy Prompt</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout fade-up">
+      <div class="icon">💡</div>
+      <p><strong>Format fail yang disokong Claude:</strong> CSV, Excel (.xlsx), PDF, Word, teks biasa, dan gambar. Untuk CSV/Excel — upload terus ke chat, Claude akan baca keseluruhan fail secara automatik tanpa perlu copy-paste kandungannya.</p>
+    </div>
+
   </div>
 </div>
-<div id="bahagian-c"></div>
+
+<!-- ================= BAHAGIAN C ================= -->
+<div id="bahagian-c">
+  <div class="section-wrap">
+
+    <div class="bahagian-header fade-up" style="background: linear-gradient(135deg, #1a6e1a 0%, #2e9e2e 100%);">
+      <div class="bahagian-letter">C</div>
+      <div class="bahagian-info">
+        <div class="bahagian-karat">Bahagian C — Self-Challenge &nbsp;·&nbsp; Buat bila-bila masa</div>
+        <h3>5 Mini-Challenge untuk Dicuba</h3>
+        <p>Selesaikan lepas sesi atau dalam masa lapang — bermula dari yang paling mudah. Tandakan (✓) setiap cabaran yang berjaya diselesaikan!</p>
+      </div>
+    </div>
+
+    <div class="challenge-list">
+
+      <!-- Challenge 1 -->
+      <label class="challenge-card fade-up">
+        <input type="checkbox" class="challenge-cb">
+        <div class="challenge-inner">
+          <div class="cb-visual">✓</div>
+          <div class="challenge-content">
+            <div class="challenge-meta">
+              <span class="challenge-level level-mudah">Mudah</span>
+              <span class="challenge-num">Cabaran 1 / 5</span>
+            </div>
+            <div class="challenge-title">Tukar 1 emel tidak rasmi jadi emel rasmi</div>
+            <div class="challenge-desc">Ambil mana-mana emel atau WhatsApp mesej kerja yang anda tulis dalam bahasa santai, minta Claude tukar jadi emel rasmi yang sesuai dihantar kepada Ketua Jabatan atau pelanggan.</div>
+            <div class="challenge-hint">💬 Prompt: "Tolong tukar mesej ini jadi emel rasmi yang formal dan sopan untuk dihantar kepada Ketua Jabatan: [tampal mesej anda]"</div>
+          </div>
+        </div>
+      </label>
+
+      <!-- Challenge 2 -->
+      <label class="challenge-card fade-up">
+        <input type="checkbox" class="challenge-cb">
+        <div class="challenge-inner">
+          <div class="cb-visual">✓</div>
+          <div class="challenge-content">
+            <div class="challenge-meta">
+              <span class="challenge-level level-mudah">Mudah</span>
+              <span class="challenge-num">Cabaran 2 / 5</span>
+            </div>
+            <div class="challenge-title">Ringkaskan 1 dokumen panjang jadi 5 perkara penting</div>
+            <div class="challenge-desc">Pilih mana-mana dokumen kerja (laporan, surat pekeliling, SOP, minit mesyuarat) — upload ke Claude dan minta ringkasan dalam 5 perkara paling penting sahaja.</div>
+            <div class="challenge-hint">💬 Prompt: "Ringkaskan dokumen ini kepada 5 perkara penting sahaja, dalam Bahasa Melayu yang mudah difahami: [upload fail atau tampal teks]"</div>
+          </div>
+        </div>
+      </label>
+
+      <!-- Challenge 3 -->
+      <label class="challenge-card fade-up">
+        <input type="checkbox" class="challenge-cb">
+        <div class="challenge-inner">
+          <div class="cb-visual">✓</div>
+          <div class="challenge-content">
+            <div class="challenge-meta">
+              <span class="challenge-level level-sederhana">Sederhana</span>
+              <span class="challenge-num">Cabaran 3 / 5</span>
+            </div>
+            <div class="challenge-title">Tukar senarai nota jadi jadual perbandingan</div>
+            <div class="challenge-desc">Ada senarai bullet point atau nota yang sukar dibandingkan? Minta Claude susun semula jadi jadual yang kemas dengan lajur yang bermakna — sesuai untuk slaid taklimat atau laporan.</div>
+            <div class="challenge-hint">💬 Prompt: "Tukar senarai ini jadi jadual perbandingan yang kemas dalam Bahasa Melayu. Pilih lajur yang paling sesuai untuk membandingkan item-item ini: [tampal senarai anda]"</div>
+          </div>
+        </div>
+      </label>
+
+      <!-- Challenge 4 -->
+      <label class="challenge-card fade-up">
+        <input type="checkbox" class="challenge-cb">
+        <div class="challenge-inner">
+          <div class="cb-visual">✓</div>
+          <div class="challenge-content">
+            <div class="challenge-meta">
+              <span class="challenge-level level-sederhana">Sederhana</span>
+              <span class="challenge-num">Cabaran 4 / 5</span>
+            </div>
+            <div class="challenge-title">Analisis 1 dataset kecil milik anda</div>
+            <div class="challenge-desc">Guna data sebenar dari kerja anda — rekod sampel, jadual penggunaan peralatan, senarai inventori, atau apa-apa sahaja dalam Excel/CSV. Upload ke Claude dan minta analisis penuh dengan cadangan tindakan.</div>
+            <div class="challenge-hint">💬 Prompt: "Saya upload data [jenis data]. Tolong: (1) buat ringkasan, (2) cari trend atau anomali, (3) cadangkan 2-3 tindakan berdasarkan penemuan ini. Bahasa: Bahasa Melayu."</div>
+          </div>
+        </div>
+      </label>
+
+      <!-- Challenge 5 -->
+      <label class="challenge-card fade-up">
+        <input type="checkbox" class="challenge-cb">
+        <div class="challenge-inner">
+          <div class="cb-visual">✓</div>
+          <div class="challenge-content">
+            <div class="challenge-meta">
+              <span class="challenge-level level-mencabar">Mencabar</span>
+              <span class="challenge-num">Cabaran 5 / 5</span>
+            </div>
+            <div class="challenge-title">Bina 1 mini-tool automasi Google Sheets</div>
+            <div class="challenge-desc">Pilih satu tugasan berulang yang anda buat secara manual dalam spreadsheet — contoh: kira jumlah automatik, buat laporan bulanan dari data, atau hantar notifikasi bila stok rendah. Minta Claude tulis Apps Script untuk anda.</div>
+            <div class="challenge-hint">💬 Prompt: "Bantu saya bina skrip Google Apps Script untuk Google Sheets yang boleh [nyatakan fungsi yang dikehendaki]. Saya bukan programmer — berikan kod lengkap dan arahan langkah demi langkah cara pasang dan gunakannya."</div>
+          </div>
+        </div>
+      </label>
+
+    </div>
+
+    <div class="callout fade-up">
+      <div class="icon">🏆</div>
+      <p><strong>Dah siap semua 5 cabaran?</strong> Cuba kongsi hasil atau pengalaman anda dengan rakan sekerja — mungkin anda dah jumpa cara guna Claude yang boleh bantu seluruh unit! Boleh juga cuba cipta cabaran sendiri berdasarkan tugasan harian anda.</p>
+    </div>
+
+  </div>
+</div>
 
 <footer>
   <div class="footer-brand">Workshop Hands-On 🧪</div>
