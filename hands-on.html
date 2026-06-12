@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop Hands-On — Belajar Guna Claude Sendiri | DVS</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== DESIGN TOKENS (sama dengan index.html) ===== */
+  :root {
+    --clay-blue:       #1E4FA0;
+    --clay-blue-deep:  #0F3576;
+    --clay-blue-light: #2A61BB;
+    --clay-red:        #D32F2F;
+    --clay-red-deep:   #8B1A1A;
+    --clay-yellow:     #FFC72C;
+    --clay-cream:      #FFF8EC;
+    --clay-white:      #FFFFFF;
+    --ink:             #27314A;
+    --ink-soft:        #5B6478;
+    --line:            rgba(30,79,160,0.12);
+
+    --display: 'Baloo 2', sans-serif;
+    --body:    'Plus Jakarta Sans', sans-serif;
+
+    --shadow-card:       0 2px 0 rgba(15,53,118,0.45), 0 8px 28px rgba(30,79,160,0.10);
+    --shadow-card-hover: 0 5px 0 rgba(15,53,118,0.45), 0 20px 44px rgba(30,79,160,0.16);
+    --shadow-btn:        0 4px 0 var(--clay-blue-deep), 0 6px 18px rgba(15,53,118,0.22);
+    --shadow-btn-press:  0 1px 0 var(--clay-blue-deep), 0 2px 6px rgba(15,53,118,0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    background: var(--clay-cream);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ===== FADE-UP ===== */
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up:nth-child(2) { transition-delay: 0.08s; }
+    .fade-up:nth-child(3) { transition-delay: 0.16s; }
+  }
+
+  /* ===== HEADER / NAV ===== */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--clay-blue);
+    box-shadow: 0 4px 18px rgba(15,53,118,0.30);
+    padding: 13px 24px;
+  }
+  .header-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-icon {
+    width: 40px; height: 40px; background: var(--clay-yellow);
+    border-radius: 13px; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 4px 0 rgba(0,0,0,0.18); flex-shrink: 0;
+  }
+  .brand-text h1 { font-family: var(--display); font-weight: 700; font-size: 18px; color: #fff; line-height: 1.1; }
+  .brand-text .sub { font-size: 11px; font-weight: 500; color: var(--clay-yellow); letter-spacing: 0.07em; }
+  nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  nav a {
+    font-family: var(--body); font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.10);
+    border: 1.5px solid rgba(255,255,255,0.16);
+    padding: 7px 16px; border-radius: 50px; text-decoration: none;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.14);
+    transition: background 0.15s, color 0.15s, transform 0.12s, box-shadow 0.12s;
+  }
+  nav a:hover { background: rgba(255,255,255,0.20); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 0 rgba(0,0,0,0.14); }
+  nav a:active { transform: translateY(1px); box-shadow: var(--shadow-btn-press); }
+  nav a.active { background: var(--clay-yellow); color: var(--ink); border-color: var(--clay-yellow); box-shadow: 0 3px 0 rgba(0,0,0,0.18); }
+  nav a.back {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.7);
+  }
+  nav a.back:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .nav-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.2); margin: 0 2px; }
+
+  /* ===== SECTION BASE ===== */
+  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 72px 24px; border-bottom: 1px solid var(--line); }
+  .section-wrap:last-of-type { border-bottom: none; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--body); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.17em; text-transform: uppercase;
+    color: var(--clay-blue); background: rgba(30,79,160,0.08);
+    padding: 6px 14px; border-radius: 50px; margin-bottom: 18px;
+  }
+  h2 { font-family: var(--display); font-weight: 700; font-size: 36px; color: var(--ink); margin-bottom: 10px; }
+  .lede { font-size: 17px; color: var(--ink-soft); max-width: 720px; margin-bottom: 40px; line-height: 1.65; }
+
+  /* ===== HERO ===== */
+  .hero-bg {
+    background:
+      radial-gradient(ellipse at 90% 10%, rgba(255,199,44,0.22) 0%, transparent 50%),
+      radial-gradient(ellipse at 5% 95%, rgba(30,79,160,0.10) 0%, transparent 50%),
+      var(--clay-cream);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 80px 24px 72px; }
+  .hero-inner h1 {
+    font-family: var(--display); font-weight: 800; font-size: 46px; line-height: 1.1;
+    color: var(--ink); max-width: 800px; margin-bottom: 20px;
+  }
+  .hero-inner h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--clay-blue) 20%, #5087D6 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-inner .lede { font-size: 18px; max-width: 660px; margin-bottom: 28px; }
+  .hero-badges { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--clay-white); border-radius: 50px;
+    padding: 9px 16px; font-size: 13.5px; font-weight: 600; color: var(--ink);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* ===== BAHAGIAN HEADER CARD ===== */
+  .bahagian-header {
+    background: linear-gradient(135deg, var(--clay-blue) 0%, var(--clay-blue-light) 100%);
+    border-radius: 22px; padding: 28px 32px;
+    margin-bottom: 36px;
+    box-shadow: var(--shadow-card);
+    display: flex; align-items: flex-start; gap: 20px;
+  }
+  .bahagian-letter {
+    font-family: var(--display); font-weight: 800; font-size: 52px; line-height: 1;
+    color: rgba(255,255,255,0.15); flex-shrink: 0; margin-top: -4px;
+    min-width: 44px;
+  }
+  .bahagian-info { flex: 1; }
+  .bahagian-karat {
+    font-family: var(--body); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--clay-yellow); margin-bottom: 6px;
+  }
+  .bahagian-info h3 { font-family: var(--display); font-weight: 700; font-size: 24px; color: #fff; margin-bottom: 8px; }
+  .bahagian-info p { font-size: 14.5px; color: rgba(255,255,255,0.78); line-height: 1.6; max-width: 640px; }
+
+  /* ===== STEP FLOW ===== */
+  .step-flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 40px; }
+  .step-flow-item { display: flex; gap: 18px; align-items: flex-start; padding: 22px 0; border-top: 1px solid var(--line); }
+  .step-flow-item:last-child { border-bottom: 1px solid var(--line); }
+  .step-num {
+    font-family: var(--display); font-weight: 800; font-size: 22px;
+    color: #fff; background: linear-gradient(135deg, var(--clay-blue), #5087D6);
+    min-width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 0 var(--clay-blue-deep); font-size: 18px;
+  }
+  .step-flow-item h4 { font-family: var(--display); font-weight: 700; font-size: 16px; color: var(--ink); margin-bottom: 4px; }
+  .step-flow-item p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ===== SAMPLE NOTES BOX ===== */
+  .sample-label {
+    font-family: var(--display); font-weight: 700; font-size: 16px;
+    color: var(--ink); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .notebook {
+    background: var(--clay-white);
+    border-radius: 18px; overflow: hidden;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 40px;
+  }
+  .notebook-bar {
+    background: linear-gradient(135deg, #4A4A6A, #27314A);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--body); font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.7);
+  }
+  .notebook-bar .dots { display: flex; gap: 6px; }
+  .notebook-bar .dots span { width: 9px; height: 9px; border-radius: 50%; }
+  .notebook-bar .dots span:nth-child(1) { background: #FF5F57; }
+  .notebook-bar .dots span:nth-child(2) { background: #FEBC2E; }
+  .notebook-bar .dots span:nth-child(3) { background: #28C840; }
+  .notebook-content {
+    padding: 24px 28px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13.5px; color: var(--ink); line-height: 1.9;
+    white-space: pre-line;
+    border-left: 4px solid var(--clay-yellow);
+  }
+  .notebook-content .nt { color: var(--clay-blue); font-weight: 700; }
+
+  /* ===== PROMPT CARDS ===== */
+  .step-divider {
+    font-family: var(--display); font-weight: 700; font-size: 18px;
+    color: var(--ink); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .step-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+
+  .prompt-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+  .prompt-card {
+    background: var(--clay-white);
+    border-radius: 22px; overflow: hidden;
+    box-shadow: var(--shadow-card);
+    display: flex; flex-direction: column;
+    transition: transform 0.22s, box-shadow 0.22s;
+  }
+  .prompt-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); }
+  .prompt-card-header {
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .prompt-card-icon {
+    font-size: 28px; margin-bottom: 10px; display: block;
+    width: 52px; height: 52px;
+    background: rgba(30,79,160,0.07);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 0 rgba(30,79,160,0.12);
+  }
+  .prompt-card h3 {
+    font-family: var(--display); font-weight: 700; font-size: 18px;
+    color: var(--ink); margin-bottom: 5px;
+  }
+  .prompt-card .prompt-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+  .prompt-card-body { padding: 18px 22px 20px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .prompt-box {
+    background: rgba(30,79,160,0.04);
+    border: 1.5px solid rgba(30,79,160,0.14);
+    border-left: 4px solid var(--clay-yellow);
+    border-radius: 14px; padding: 14px 16px;
+    font-size: 13.5px; color: var(--ink); line-height: 1.7;
+    font-style: italic; flex: 1;
+  }
+  .copy-btn {
+    font-family: var(--body); font-size: 13.5px; font-weight: 700;
+    background: var(--clay-blue); color: #fff;
+    border: none; border-radius: 50px; cursor: pointer;
+    padding: 10px 20px;
+    box-shadow: var(--shadow-btn);
+    transition: transform 0.12s, box-shadow 0.12s, background 0.2s;
+    display: inline-flex; align-items: center; gap: 7px;
+    user-select: none; align-self: flex-start;
+  }
+  .copy-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+  .copy-btn:active { transform: translateY(2px); box-shadow: var(--shadow-btn-press); }
+  .copy-btn.copied { background: #1a7a1a; }
+
+  /* ===== CALLOUT ===== */
+  .callout {
+    border-radius: 18px; background: #FFFBF0;
+    border: 1.5px solid rgba(255,199,44,0.5);
+    padding: 20px 22px; display: flex; gap: 14px; align-items: flex-start;
+    margin-top: 24px;
+    box-shadow: 0 3px 0 rgba(255,199,44,0.3), 0 6px 16px rgba(255,199,44,0.10);
+  }
+  .callout .icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--clay-yellow); border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+  }
+  .callout p { font-size: 14.5px; color: #5b4a1a; line-height: 1.65; }
+  .callout strong { color: #8B6A00; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: linear-gradient(135deg, var(--clay-blue-deep) 0%, var(--clay-blue) 100%);
+    color: rgba(255,255,255,0.75); padding: 44px 24px; text-align: center;
+    font-size: 13.5px; font-weight: 500;
+  }
+  .footer-brand { font-family: var(--display); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+  footer span { color: var(--clay-yellow); font-weight: 700; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 680px) {
+    .hero-inner h1 { font-size: 32px; }
+    h2 { font-size: 26px; }
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .section-wrap { padding: 52px 16px; }
+    .hero-inner { padding: 56px 16px 52px; }
+    .bahagian-header { flex-direction: column; gap: 12px; }
+    .bahagian-letter { font-size: 36px; }
+    .prompt-grid { grid-template-columns: 1fr; }
+    .nav-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-icon">🧪</div>
+      <div class="brand-text">
+        <h1>Workshop Hands-On</h1>
+        <span class="sub">Jabatan Perkhidmatan Veterinar · ITU</span>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html" class="back nav-link">← Kembali ke Taklimat</a>
+      <div class="nav-divider"></div>
+      <a href="#bahagian-a" class="nav-link active">Bahagian A</a>
+      <a href="#bahagian-b" class="nav-link">Bahagian B</a>
+      <a href="#bahagian-c" class="nav-link">Bahagian C</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero-bg">
+  <div class="hero-inner">
+    <div class="eyebrow">🛠️ Modul Hands-On — DVS / ITU</div>
+    <h1>Belajar Guna <em>Claude</em> Sendiri</h1>
+    <p class="lede">
+      Bukan tengok je — masa untuk praktik! Dalam workshop ni, setiap peserta akan cuba sendiri tukar nota kerja jadi bahan interaktif, main dengan data makmal, dan selesaikan mini-challenge guna Claude.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge">⏱️ &nbsp;±45 minit</span>
+      <span class="hero-badge">👥 &nbsp;Kerja individu / berkumpulan</span>
+      <span class="hero-badge">💻 &nbsp;Perlu akaun Claude.ai</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= BAHAGIAN A ================= -->
+<div id="bahagian-a">
+  <div class="section-wrap">
+
+    <div class="bahagian-header fade-up">
+      <div class="bahagian-letter">A</div>
+      <div class="bahagian-info">
+        <div class="bahagian-karat">Bahagian A — Aktiviti 1 &nbsp;·&nbsp; ±15 minit</div>
+        <h3>Nota Kelas → Bahan Interaktif</h3>
+        <p>Anda ada nota atau SOP dalam bentuk teks biasa? Claude boleh tukar jadi infografik visual, set flashcard untuk ulang kaji, atau kuiz MCQ secara automatik — tanpa perlu reka bentuk sendiri.</p>
+      </div>
+    </div>
+
+    <!-- Cara kerja -->
+    <div class="step-flow fade-up">
+      <div class="step-flow-item">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Sediakan nota anda</h4>
+          <p>Ambil mana-mana nota SOP, prosedur, atau kandungan latihan dalam bentuk teks biasa. Boleh guna contoh di bawah kalau tak ada nota sendiri.</p>
+        </div>
+      </div>
+      <div class="step-flow-item">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Pilih jenis output yang dikehendaki</h4>
+          <p>Copy salah satu prompt template di bawah mengikut output yang anda nak hasilkan — infografik, flashcard, atau kuiz.</p>
+        </div>
+      </div>
+      <div class="step-flow-item">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Tampal prompt + nota ke Claude</h4>
+          <p>Buka claude.ai, paste prompt yang dicopy, gantikan "[tampal nota anda di sini]" dengan nota sebenar, tekan Enter dan tengok hasilnya.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample Nota SOP -->
+    <div class="sample-label fade-up">
+      📄 &nbsp;Contoh nota SOP yang boleh digunakan (atau guna nota sendiri):
+    </div>
+    <div class="notebook fade-up">
+      <div class="notebook-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span>sop-penerimaan-sampel.txt</span>
+      </div>
+      <div class="notebook-content"><span class="nt">SOP PENERIMAAN SAMPEL MAKMAL</span>
+Institut Teknologi Unggas — Jabatan Perkhidmatan Veterinar
+
+<span class="nt">LANGKAH PENERIMAAN:</span>
+1. Periksa label sampel — pastikan nama pemilik, spesies haiwan,
+   nombor kes, dan tarikh pengambilan lengkap
+2. Semak keadaan sampel secara fizikal — suhu, kebocoran, kerosakan
+   bekas, dan sama ada jenis spesimen bersesuaian
+3. Daftar dalam sistem LIMS — masukkan nombor sampel, jenis ujian
+   yang diminta, dan unit pemohon
+4. Hantar ke bahagian yang sesuai mengikut jenis ujian:
+   - Ujian serologi → Unit Serologi
+   - Kultur bakteria → Unit Bakteriologi
+   - PCR/diagnostik molekul → Unit Virologi
+5. Simpan baki sampel: 4°C (jangka pendek) atau -20°C (jangka panjang)
+
+<span class="nt">PERKARA PENTING:</span>
+- Sampel tanpa label lengkap TIDAK boleh diproses — kembalikan kepada penghantar
+- Laporkan sampel rosak atau mencurigakan kepada Penyelia dalam masa 1 jam
+- Semua penerimaan mesti dicatat dalam log harian dan sistem LIMS
+- Pakai PPE yang sesuai semasa mengendalikan semua spesimen</div>
+    </div>
+
+    <!-- Prompt Templates -->
+    <div class="step-divider fade-up">Pilih output — copy prompt, paste ke Claude</div>
+
+    <div class="prompt-grid">
+
+      <!-- Prompt 1: Infografik -->
+      <div class="prompt-card fade-up">
+        <div class="prompt-card-header">
+          <div class="prompt-card-icon">🎨</div>
+          <h3>Infografik Visual</h3>
+          <p class="prompt-desc">Claude Jana kod HTML lengkap dalam Artifact — boleh terus guna sebagai slaid atau bahan cetak visual.</p>
+        </div>
+        <div class="prompt-card-body">
+          <div class="prompt-box" id="prompt-infografik">Saya ada nota SOP makmal berikut. Tolong tukar jadi infografik HTML yang visual dan menarik menggunakan Artifacts. Gunakan warna-warna cerah, icon emoji yang sesuai, dan susun atur yang mudah difahami. Pastikan teks ringkas — gunakan bullet point dan heading yang jelas.
+
+Format output: kod HTML lengkap dalam Artifact (boleh terus dibuka dalam browser).
+
+Nota SOP:
+[tampal nota anda di sini]</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'prompt-infografik')">
+            <span class="ci">📋</span><span class="ct">Copy Prompt</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Prompt 2: Flashcard -->
+      <div class="prompt-card fade-up">
+        <div class="prompt-card-header">
+          <div class="prompt-card-icon">🃏</div>
+          <h3>Flashcard Ulang Kaji</h3>
+          <p class="prompt-desc">Claude hasilkan set kad soal-jawab — sesuai untuk ulang kaji cepat atau kuiz sesama rakan sekerja.</p>
+        </div>
+        <div class="prompt-card-body">
+          <div class="prompt-box" id="prompt-flashcard">Tukar nota di bawah jadi set flashcard untuk ulang kaji. Setiap flashcard perlu ada:
+• Soalan (hadapan kad) — ringkas dan jelas
+• Jawapan (belakang kad) — 1-3 ayat, padat
+
+Buat minimum 6 flashcard yang meliputi konsep dan langkah paling penting. Format: senarai bernombor, label "S:" untuk soalan dan "J:" untuk jawapan. Bahasa: Bahasa Melayu.
+
+Nota:
+[tampal nota anda di sini]</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'prompt-flashcard')">
+            <span class="ci">📋</span><span class="ct">Copy Prompt</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Prompt 3: Quiz -->
+      <div class="prompt-card fade-up">
+        <div class="prompt-card-header">
+          <div class="prompt-card-icon">📝</div>
+          <h3>Kuiz Kefahaman</h3>
+          <p class="prompt-desc">Claude buat soalan MCQ dengan kunci jawapan — sesuai untuk uji kefahaman pekerja baru atau semakan latihan.</p>
+        </div>
+        <div class="prompt-card-body">
+          <div class="prompt-box" id="prompt-kuiz">Berdasarkan nota di bawah, buat 5 soalan kuiz pelbagai pilihan (MCQ) untuk menguji kefahaman. Format setiap soalan:
+• Nombor soalan dan teks soalan
+• 4 pilihan jawapan (A, B, C, D)
+• [Jawapan: X] di akhir setiap soalan
+
+Pastikan soalan menguji pemahaman konsep, bukan hafalan semata. Aras kesukaran: sederhana. Bahasa: Bahasa Melayu formal.
+
+Nota:
+[tampal nota anda di sini]</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'prompt-kuiz')">
+            <span class="ci">📋</span><span class="ct">Copy Prompt</span>
+          </button>
+        </div>
+      </div>
+
+    </div><!-- end prompt-grid -->
+
+    <div class="callout fade-up">
+      <div class="icon">💡</div>
+      <p><strong>Pro tip:</strong> Selepas Claude hasilkan output, cuba minta penambahbaikan: <em>"Boleh buat versi yang lebih ringkas?"</em> atau <em>"Tambah contoh berkaitan makmal haiwan?"</em> — Claude akan ubah suai mengikut arahan anda.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PLACEHOLDER BAHAGIAN B & C ===== -->
+<div id="bahagian-b">
+  <div class="section-wrap" style="text-align:center; padding: 56px 24px;">
+    <div class="eyebrow" style="margin:0 auto 16px;">🔜 Akan Datang</div>
+    <h2 style="margin-bottom:10px;">Bahagian B &amp; C</h2>
+    <p style="color:var(--ink-soft);font-size:16px;max-width:480px;margin:0 auto;">
+      "Main dengan Data Sendiri" dan "Self-Challenge" sedang dalam pembinaan — akan ditambah selepas Bahagian A diuji.
+    </p>
+  </div>
+</div>
+<div id="bahagian-c"></div>
+
+<footer>
+  <div class="footer-brand">Workshop Hands-On 🧪</div>
+  Disediakan untuk taklimat PM &amp; PPS — Institut Teknologi Unggas, <span>Jabatan Perkhidmatan Veterinar</span>
+</footer>
+
+<script>
+  // ===== ACTIVE NAV ON SCROLL =====
+  const navLinks = document.querySelectorAll('.nav-link:not(.back)');
+  const anchors  = ['bahagian-a', 'bahagian-b', 'bahagian-c'];
+  window.addEventListener('scroll', () => {
+    let current = anchors[0];
+    anchors.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 130) current = id;
+    });
+    navLinks.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // ===== FADE-UP INTERSECTION OBSERVER =====
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  }
+
+  // ===== COPY PROMPT =====
+  function copyPrompt(btn, promptId) {
+    const text = document.getElementById(promptId).innerText.trim();
+    const icon = btn.querySelector('.ci');
+    const label = btn.querySelector('.ct');
+    navigator.clipboard.writeText(text).then(() => {
+      icon.textContent = '✓';
+      label.textContent = 'Disalin!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        icon.textContent = '📋';
+        label.textContent = 'Copy Prompt';
+        btn.classList.remove('copied');
+      }, 2200);
+    }).catch(() => {
+      label.textContent = 'Cuba lagi…';
+      setTimeout(() => { label.textContent = 'Copy Prompt'; }, 1800);
+    });
+  }
+</script>
+
+</body>
+</html>
