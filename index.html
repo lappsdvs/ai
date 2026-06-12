@@ -190,6 +190,18 @@
     box-shadow: 0 3px 0 var(--clay-blue-deep);
   }
   .card .badge.red { background: var(--clay-red); box-shadow: 0 3px 0 var(--clay-red-deep); }
+  .card.card-featured {
+    border: 2px solid var(--clay-yellow);
+    background: linear-gradient(160deg, #FFFCF0 0%, var(--clay-white) 60%);
+  }
+  .card.card-featured::after {
+    content: "✦ Kita guna hari ini";
+    position: absolute; top: -14px; right: 18px;
+    background: var(--clay-yellow); color: var(--ink);
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    padding: 4px 12px; border-radius: 50px;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+  }
   .card h3 {
     font-family: var(--display); font-weight: 700; font-size: 20px;
     color: var(--ink); margin: 14px 0 10px;
@@ -520,6 +532,7 @@
     </div>
     <nav>
       <a href="#intro"     class="nav-link active">Intro</a>
+      <a href="#landskap"  class="nav-link">Landskap AI</a>
       <a href="#setup"     class="nav-link">Setup</a>
       <a href="#integrasi" class="nav-link">Integrasi</a>
       <a href="#skill"     class="nav-link">Skill</a>
@@ -545,6 +558,38 @@
       <div class="meta-card fade-up"><span class="label">Pengalaman</span><strong>2–3 tahun bertugas</strong></div>
       <div class="meta-card fade-up"><span class="label">Fokus</span><strong>Tugasan harian makmal &amp; pejabat</strong></div>
       <div class="meta-card fade-up"><span class="label">Alat</span><strong>Claude.ai (Web &amp; App)</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LANDSKAP AI ================= -->
+<div id="landskap">
+  <div class="section-wrap">
+    <div class="eyebrow">🌐 Pengenalan — Landskap AI</div>
+    <h2>Bukan Cuma Satu AI — Kenal Pemain Utama</h2>
+    <p class="lede">Sebelum kita fokus kepada Claude, baik kita kenali dulu beberapa AI assistant popular yang mungkin sudah pernah anda dengar atau guna.</p>
+
+    <div class="grid grid-3">
+      <div class="card fade-up">
+        <span class="badge">01</span>
+        <h3>ChatGPT (OpenAI)</h3>
+        <p>Paling dikenali ramai orang, pelopor chatbot AI mainstream. Kuat untuk perbualan umum, brainstorming, dan pelbagai plugin/integrasi pihak ketiga.</p>
+      </div>
+      <div class="card fade-up">
+        <span class="badge">02</span>
+        <h3>Gemini (Google)</h3>
+        <p>Terbina terus dalam Google Workspace — Gmail, Docs, Sheets. Sesuai untuk yang dah biasa guna ekosistem Google dalam kerja harian.</p>
+      </div>
+      <div class="card card-featured fade-up">
+        <span class="badge">03</span>
+        <h3>Claude (Anthropic)</h3>
+        <p>Dikenali kuat dalam penulisan, analisis dokumen panjang, dan memahami konteks Bahasa Melayu dengan baik. Fokus kita untuk hands-on hari ini.</p>
+      </div>
+    </div>
+
+    <div class="callout fade-up">
+      <div class="icon">💡</div>
+      <p><strong>Kenapa Claude untuk sesi hands-on hari ini?</strong> Bukan sebab yang lain tak bagus — tapi sebab senang untuk pemula, free tier mencukupi untuk kegunaan harian, dan kuat dalam tugasan Bahasa Melayu/dokumen yang relevan dengan kerja makmal kita.</p>
     </div>
   </div>
 </div>
@@ -855,7 +900,7 @@ Tarikh: 10 Jun 2026
 <script>
   // ===== ACTIVE NAV ON SCROLL =====
   const navLinks = document.querySelectorAll('.nav-link');
-  const anchors  = ['intro','setup','integrasi','skill','debug','deploy'];
+  const anchors  = ['intro','landskap','setup','integrasi','skill','debug','deploy'];
   window.addEventListener('scroll', () => {
     let current = anchors[0];
     anchors.forEach(id => {
