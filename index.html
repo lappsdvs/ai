@@ -3,499 +3,683 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bagaimana AI (Claude) Membantu Kerja Seharian Pembantu Makmal &amp; Penolong Pegawai Sains DVS</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Bagaimana AI (Claude) Membantu Kerja Seharian PM &amp; PPS DVS</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --paper:#F4EFE4;
-    --paper-deep:#ECE4D2;
-    --ink:#23303A;
-    --teal:#2F5F5C;
-    --teal-deep:#1F4341;
-    --amber:#D9A441;
-    --rust:#B5573A;
-    --line:#C9BFA9;
-    --mono:'IBM Plex Mono', monospace;
-    --sans:'Space Grotesk', sans-serif;
-    --serif:'Fraunces', serif;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:var(--sans);
-    background:var(--paper);
-    color:var(--ink);
-    line-height:1.5;
+  :root {
+    --clay-blue:       #1E4FA0;
+    --clay-blue-deep:  #0F3576;
+    --clay-blue-light: #2A61BB;
+    --clay-red:        #D32F2F;
+    --clay-red-deep:   #8B1A1A;
+    --clay-yellow:     #FFC72C;
+    --clay-cream:      #FFF8EC;
+    --clay-white:      #FFFFFF;
+    --ink:             #27314A;
+    --ink-soft:        #5B6478;
+    --line:            rgba(30,79,160,0.12);
+
+    --display: 'Baloo 2', sans-serif;
+    --body:    'Plus Jakarta Sans', sans-serif;
+
+    --shadow-card:       0 2px 0 rgba(15,53,118,0.45), 0 8px 28px rgba(30,79,160,0.10);
+    --shadow-card-hover: 0 5px 0 rgba(15,53,118,0.45), 0 20px 44px rgba(30,79,160,0.16);
+    --shadow-btn:        0 4px 0 var(--clay-blue-deep), 0 6px 18px rgba(15,53,118,0.22);
+    --shadow-btn-press:  0 1px 0 var(--clay-blue-deep), 0 2px 6px rgba(15,53,118,0.14);
   }
 
-  /* ===== NAV ===== */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:var(--teal-deep);
-    border-bottom:4px solid var(--amber);
-    padding:18px 24px;
-  }
-  .header-inner{
-    max-width:1100px; margin:0 auto;
-    display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:14px;
-  }
-  .brand{
-    display:flex; align-items:baseline; gap:10px;
-    color:var(--paper);
-  }
-  .brand .tag{
-    font-family:var(--mono); font-size:11px; letter-spacing:.18em;
-    text-transform:uppercase; color:var(--amber);
-    border:1px solid var(--amber); padding:3px 8px; border-radius:3px;
-  }
-  .brand h1{
-    font-family:var(--serif); font-weight:600; font-size:22px;
-  }
-  nav{display:flex; gap:6px; flex-wrap:wrap;}
-  nav a{
-    font-family:var(--mono); font-size:12px; letter-spacing:.06em;
-    text-transform:uppercase; color:var(--paper);
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.18);
-    padding:8px 14px; border-radius:3px;
-    text-decoration:none; transition:.15s;
-  }
-  nav a:hover, nav a.active{
-    background:var(--amber); color:var(--teal-deep); border-color:var(--amber);
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    background: var(--clay-cream);
+    color: var(--ink);
+    line-height: 1.6;
   }
 
-  /* ===== SECTION GENERIC ===== */
-  section{
-    max-width:1100px; margin:0 auto;
-    padding:72px 24px;
-    border-bottom:1px solid var(--line);
+  /* ===== FADE-UP ANIMATION ===== */
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up:nth-child(2) { transition-delay: 0.09s; }
+    .fade-up:nth-child(3) { transition-delay: 0.18s; }
+    .fade-up:nth-child(4) { transition-delay: 0.27s; }
   }
-  section:last-child{border-bottom:none;}
-  .eyebrow{
-    font-family:var(--mono); font-size:12px; letter-spacing:.22em;
-    text-transform:uppercase; color:var(--teal);
-    display:flex; align-items:center; gap:10px; margin-bottom:18px;
+
+  /* ===== STICKY HEADER ===== */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--clay-blue);
+    box-shadow: 0 4px 18px rgba(15,53,118,0.30);
+    padding: 13px 24px;
   }
-  .eyebrow::before{
-    content:""; display:inline-block; width:34px; height:2px; background:var(--amber);
+  .header-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
   }
-  h2{
-    font-family:var(--serif); font-weight:700; font-size:38px;
-    color:var(--teal-deep); margin-bottom:8px; letter-spacing:-0.01em;
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-icon {
+    width: 40px; height: 40px;
+    background: var(--clay-yellow);
+    border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.18);
+    flex-shrink: 0;
   }
-  .lede{
-    font-size:17px; color:#4A5660; max-width:680px; margin-bottom:40px;
+  .brand-text h1 {
+    font-family: var(--display);
+    font-weight: 700; font-size: 18px;
+    color: #fff; line-height: 1.1;
+  }
+  .brand-text .sub {
+    font-size: 11px; font-weight: 500;
+    color: var(--clay-yellow); letter-spacing: 0.07em;
+  }
+  nav { display: flex; gap: 6px; flex-wrap: wrap; }
+  nav a {
+    font-family: var(--body); font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.10);
+    border: 1.5px solid rgba(255,255,255,0.16);
+    padding: 7px 16px; border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.14);
+    transition: background 0.15s, color 0.15s, transform 0.12s, box-shadow 0.12s;
+  }
+  nav a:hover {
+    background: rgba(255,255,255,0.20); color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.14);
+  }
+  nav a:active {
+    transform: translateY(1px);
+    box-shadow: var(--shadow-btn-press);
+  }
+  nav a.active {
+    background: var(--clay-yellow); color: var(--ink);
+    border-color: var(--clay-yellow);
+    box-shadow: 0 3px 0 rgba(0,0,0,0.18);
+  }
+
+  /* ===== SECTION BASE ===== */
+  .section-wrap {
+    max-width: 1100px; margin: 0 auto;
+    padding: 72px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-wrap:last-of-type { border-bottom: none; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--body); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.17em; text-transform: uppercase;
+    color: var(--clay-blue);
+    background: rgba(30,79,160,0.08);
+    padding: 6px 14px; border-radius: 50px;
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-family: var(--display);
+    font-weight: 700; font-size: 36px;
+    color: var(--ink); margin-bottom: 10px;
+  }
+  .lede {
+    font-size: 17px; color: var(--ink-soft);
+    max-width: 680px; margin-bottom: 40px; line-height: 1.65;
   }
 
   /* ===== HERO ===== */
-  .hero{
-    padding-top:100px; padding-bottom:100px;
+  .hero-bg {
     background:
-      radial-gradient(circle at 85% 20%, rgba(217,164,65,0.18), transparent 45%),
-      var(--paper);
+      radial-gradient(ellipse at 88% 12%, rgba(255,199,44,0.28) 0%, transparent 48%),
+      radial-gradient(ellipse at 8% 88%, rgba(30,79,160,0.13) 0%, transparent 48%),
+      var(--clay-cream);
   }
-  .hero .eyebrow{margin-bottom:28px;}
-  .hero h1{
-    font-family:var(--serif); font-weight:700;
-    font-size:52px; line-height:1.12;
-    color:var(--teal-deep); max-width:820px; margin-bottom:24px;
-    letter-spacing:-0.015em;
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 100px 24px;
   }
-  .hero h1 em{
-    font-style:italic; color:var(--rust);
+  .hero-inner h1 {
+    font-family: var(--display);
+    font-weight: 800; font-size: 52px; line-height: 1.1;
+    color: var(--ink); max-width: 820px; margin-bottom: 24px;
   }
-  .hero .lede{font-size:19px; max-width:640px;}
-  .meta-row{
-    display:flex; gap:14px; flex-wrap:wrap; margin-top:36px;
+  .hero-inner h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--clay-blue) 20%, #5087D6 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  .meta-card{
-    font-family:var(--mono); font-size:13px;
-    background:var(--paper-deep); border:1px solid var(--line);
-    border-radius:4px; padding:12px 16px; min-width:160px;
-  }
-  .meta-card span{display:block; color:var(--teal); font-size:11px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:6px;}
+  .hero-inner .lede { font-size: 19px; max-width: 640px; }
 
-  /* ===== SPECIMEN LABEL CARDS ===== */
-  .grid{display:grid; gap:18px;}
-  .grid-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
-  .grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+  .meta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
+  .meta-card {
+    background: var(--clay-white);
+    border-radius: 20px; padding: 14px 20px; min-width: 150px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .meta-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .meta-card .label {
+    display: block; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--clay-blue); margin-bottom: 5px;
+  }
+  .meta-card strong { font-size: 14px; font-weight: 600; color: var(--ink); }
 
-  .card{
-    background:var(--paper-deep);
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:24px;
-    position:relative;
-  }
-  .card .label-no{
-    position:absolute; top:-12px; left:20px;
-    background:var(--teal); color:var(--paper);
-    font-family:var(--mono); font-size:11px; letter-spacing:.1em;
-    padding:4px 10px; border-radius:3px;
-  }
-  .card h3{
-    font-family:var(--serif); font-weight:600; font-size:20px;
-    color:var(--teal-deep); margin:10px 0 10px;
-  }
-  .card p{font-size:14.5px; color:#4A5660;}
+  /* ===== GRID + CARD ===== */
+  .grid { display: grid; gap: 20px; }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 
-  /* ===== DEMO CHAT WIDGET ===== */
-  .demo-shell{
-    border:1px solid var(--line); border-radius:8px;
-    overflow:hidden; background:#fff;
-    box-shadow:0 10px 30px -18px rgba(35,48,58,0.4);
+  .card {
+    background: var(--clay-white);
+    border-radius: 22px; padding: 28px 24px 24px;
+    position: relative; overflow: visible;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
   }
-  .demo-bar{
-    background:var(--teal-deep); color:var(--paper);
-    font-family:var(--mono); font-size:12px; letter-spacing:.1em;
-    padding:10px 16px; display:flex; align-items:center; gap:10px;
+  .card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-card-hover);
   }
-  .demo-bar .dots{display:flex; gap:6px;}
-  .demo-bar .dots span{width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,0.25);}
-  .demo-body{padding:22px; min-height:220px;}
-  .demo-tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;}
-  .demo-tab{
-    font-family:var(--mono); font-size:12.5px;
-    border:1px solid var(--line); background:var(--paper);
-    padding:8px 14px; border-radius:20px; cursor:pointer;
-    color:var(--teal-deep); transition:.15s;
+  .card .badge {
+    position: absolute; top: -14px; left: 22px;
+    background: var(--clay-blue);
+    color: #fff; font-family: var(--body);
+    font-size: 12px; font-weight: 700; letter-spacing: 0.07em;
+    padding: 5px 14px; border-radius: 50px;
+    box-shadow: 0 3px 0 var(--clay-blue-deep);
   }
-  .demo-tab.active{background:var(--amber); border-color:var(--amber); color:var(--teal-deep); font-weight:600;}
-  .bubble{
-    border-radius:8px; padding:14px 16px; font-size:14.5px;
-    margin-bottom:12px; max-width:92%;
+  .card .badge.red {
+    background: var(--clay-red);
+    box-shadow: 0 3px 0 var(--clay-red-deep);
   }
-  .bubble.user{
-    background:var(--paper-deep); margin-left:auto;
-    border:1px solid var(--line);
+  .card h3 {
+    font-family: var(--display);
+    font-weight: 700; font-size: 20px;
+    color: var(--ink); margin: 14px 0 10px;
   }
-  .bubble.ai{
-    background:#fff; border:1px solid var(--teal); border-left:4px solid var(--teal);
-  }
-  .bubble .who{
-    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em;
-    text-transform:uppercase; color:var(--teal); margin-bottom:6px; display:block;
-  }
-  .bubble.user .who{color:#8A8068; text-align:right;}
+  .card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
 
-  /* ===== STEP LIST (DEPLOY) ===== */
-  .steps{counter-reset:step; display:flex; flex-direction:column; gap:0;}
-  .step{
-    display:flex; gap:20px; padding:22px 0;
-    border-top:1px solid var(--line);
+  /* ===== CALLOUT ===== */
+  .callout {
+    border-radius: 18px;
+    background: #FFFBF0;
+    border: 1.5px solid rgba(255,199,44,0.5);
+    padding: 20px 22px;
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-top: 22px;
+    box-shadow: 0 3px 0 rgba(255,199,44,0.3), 0 6px 16px rgba(255,199,44,0.10);
   }
-  .step:last-child{border-bottom:1px solid var(--line);}
-  .step .num{
-    counter-increment:step; font-family:var(--serif); font-weight:700;
-    font-size:30px; color:var(--amber); min-width:50px;
+  .callout .icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--clay-yellow);
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.12);
   }
-  .step .num::before{content: counter(step, decimal-leading-zero);}
-  .step h4{font-family:var(--sans); font-weight:600; font-size:16px; margin-bottom:6px; color:var(--teal-deep);}
-  .step p{font-size:14.5px; color:#4A5660;}
+  .callout p { font-size: 14.5px; color: #5b4a1a; line-height: 1.65; }
+  .callout strong { color: #8B6A00; }
 
-  /* ===== WARNING / DEBUG CALLOUT ===== */
-  .callout{
-    border:1px dashed var(--rust); border-radius:6px;
-    background:rgba(181,87,58,0.06);
-    padding:18px 20px; display:flex; gap:14px; align-items:flex-start;
-    margin-top:20px;
+  /* ===== DEMO CHAT ===== */
+  .demo-shell {
+    border-radius: 22px; overflow: hidden;
+    background: var(--clay-white);
+    box-shadow: var(--shadow-card);
   }
-  .callout .icon{
-    font-family:var(--mono); font-weight:700; font-size:13px;
-    background:var(--rust); color:#fff; border-radius:50%;
-    width:26px; height:26px; display:flex; align-items:center; justify-content:center;
-    flex-shrink:0;
+  .demo-bar {
+    background: var(--clay-blue-deep); color: #fff;
+    font-family: var(--body); font-size: 13px; font-weight: 600;
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 10px;
   }
-  .callout p{font-size:14px; color:#5b3d33;}
-  .callout strong{color:var(--rust);}
+  .demo-bar .dots { display: flex; gap: 6px; }
+  .demo-bar .dots span {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,0.28);
+  }
+  .demo-body { padding: 22px; min-height: 230px; }
+  .demo-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .demo-tab {
+    font-family: var(--body); font-size: 13px; font-weight: 600;
+    background: rgba(30,79,160,0.08);
+    border: 1.5px solid rgba(30,79,160,0.15);
+    padding: 8px 16px; border-radius: 50px;
+    cursor: pointer; color: var(--clay-blue);
+    box-shadow: 0 2px 0 rgba(30,79,160,0.15);
+    user-select: none;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.1s;
+  }
+  .demo-tab:hover { background: rgba(30,79,160,0.14); transform: translateY(-1px); }
+  .demo-tab:active { transform: translateY(1px); box-shadow: none; }
+  .demo-tab.active {
+    background: var(--clay-blue); border-color: var(--clay-blue);
+    color: #fff; box-shadow: 0 3px 0 var(--clay-blue-deep);
+  }
+  .bubble {
+    border-radius: 18px; padding: 14px 18px; font-size: 14.5px;
+    margin-bottom: 12px; max-width: 92%; line-height: 1.6;
+  }
+  .bubble.user {
+    background: rgba(30,79,160,0.07); margin-left: auto;
+    border: 1.5px solid rgba(30,79,160,0.12);
+  }
+  .bubble.ai {
+    background: #EEF4FF;
+    border: 1.5px solid rgba(30,79,160,0.18);
+    border-left: 4px solid var(--clay-blue);
+  }
+  .bubble .who {
+    display: block; font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--clay-blue); margin-bottom: 6px;
+  }
+  .bubble.user .who { color: var(--ink-soft); text-align: right; }
 
-  /* ===== TABLE-ISH ROWS ===== */
-  .compare{border:1px solid var(--line); border-radius:6px; overflow:hidden;}
-  .compare-row{
-    display:grid; grid-template-columns:1fr 1fr;
-    border-top:1px solid var(--line);
+  /* ===== COMPARE TABLE ===== */
+  .compare {
+    background: var(--clay-white);
+    border-radius: 22px; overflow: hidden;
+    box-shadow: var(--shadow-card);
   }
-  .compare-row:first-child{border-top:none; background:var(--teal-deep);}
-  .compare-row:first-child div{color:var(--paper); font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;}
-  .compare-row div{padding:14px 18px; font-size:14px;}
-  .compare-row div:first-child{border-right:1px solid var(--line); font-weight:600; color:var(--teal-deep);}
-  .compare-row:first-child div:first-child{border-right:1px solid rgba(255,255,255,0.15); color:var(--amber);}
-  .compare-row:not(:first-child) div:nth-child(2){color:#4A5660;}
+  .compare-row {
+    display: grid; grid-template-columns: 1fr 1.8fr;
+    border-top: 1px solid var(--line);
+  }
+  .compare-row:first-child {
+    border-top: none;
+    background: linear-gradient(135deg, var(--clay-blue), var(--clay-blue-light));
+  }
+  .compare-row div { padding: 14px 20px; font-size: 14px; }
+  .compare-row:first-child div {
+    color: #fff; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .compare-row:first-child div:first-child {
+    border-right: 1px solid rgba(255,255,255,0.15);
+    color: var(--clay-yellow);
+  }
+  .compare-row div:first-child {
+    border-right: 1px solid var(--line);
+    font-weight: 600; color: var(--ink);
+  }
+  .compare-row:not(:first-child) div:nth-child(2) { color: var(--ink-soft); }
+  .compare-row:not(:first-child):hover { background: rgba(30,79,160,0.04); }
+
+  /* ===== STEPS ===== */
+  .steps { counter-reset: step; display: flex; flex-direction: column; gap: 14px; }
+  .step {
+    counter-increment: step;
+    display: flex; gap: 20px; align-items: flex-start;
+    background: var(--clay-white);
+    border-radius: 22px; padding: 22px 24px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .step:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .step .num {
+    font-family: var(--display); font-weight: 800; font-size: 26px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--clay-blue), #5087D6);
+    min-width: 52px; height: 52px; flex-shrink: 0;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 0 var(--clay-blue-deep);
+  }
+  .step .num::before { content: counter(step, decimal-leading-zero); }
+  .step h4 {
+    font-family: var(--display); font-weight: 700; font-size: 17px;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .step p { font-size: 14.5px; color: var(--ink-soft); }
 
   /* ===== FOOTER ===== */
-  footer{
-    background:var(--teal-deep); color:var(--paper);
-    padding:36px 24px; text-align:center;
-    font-family:var(--mono); font-size:12px; letter-spacing:.1em;
+  footer {
+    background: linear-gradient(135deg, var(--clay-blue-deep) 0%, var(--clay-blue) 100%);
+    color: rgba(255,255,255,0.75);
+    padding: 44px 24px; text-align: center;
+    font-size: 13.5px; font-weight: 500;
   }
-  footer span{color:var(--amber);}
+  .footer-brand {
+    font-family: var(--display); font-size: 22px; font-weight: 800;
+    color: #fff; margin-bottom: 10px;
+  }
+  footer span { color: var(--clay-yellow); font-weight: 700; }
 
-  @media (max-width:680px){
-    .hero h1{font-size:36px;}
-    h2{font-size:28px;}
-    .header-inner{flex-direction:column; align-items:flex-start;}
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 680px) {
+    .hero-inner h1 { font-size: 34px; }
+    h2 { font-size: 26px; }
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .section-wrap { padding: 52px 16px; }
+    .hero-inner { padding: 64px 16px; }
+    .compare-row { grid-template-columns: 1fr; }
+    .compare-row div:first-child { border-right: none; border-bottom: 1px solid var(--line); }
   }
 </style>
 </head>
 <body>
 
+<!-- ===== HEADER ===== -->
 <header>
   <div class="header-inner">
     <div class="brand">
-      <h1>Artificial Intelligence (A.I) di Makmal</h1>
-      <span class="tag">DVS</span>
+      <div class="brand-icon">🐾</div>
+      <div class="brand-text">
+        <h1>Claude di Makmal</h1>
+        <span class="sub">Jabatan Perkhidmatan Veterinar · ITU</span>
+      </div>
     </div>
     <nav>
-      <a href="#intro" class="nav-link active">Intro</a>
-      <a href="#setup" class="nav-link">Setup</a>
+      <a href="#intro"     class="nav-link active">Intro</a>
+      <a href="#setup"     class="nav-link">Setup</a>
       <a href="#integrasi" class="nav-link">Integrasi</a>
-      <a href="#skill" class="nav-link">Skill</a>
-      <a href="#debug" class="nav-link">Debug</a>
-      <a href="#deploy" class="nav-link">Deploy</a>
+      <a href="#skill"     class="nav-link">Skill</a>
+      <a href="#debug"     class="nav-link">Debug</a>
+      <a href="#deploy"    class="nav-link">Deploy</a>
     </nav>
   </div>
 </header>
 
 <!-- ================= INTRO ================= -->
-<section id="intro" class="hero">
-  <div class="eyebrow">Spesimen 01 — Pengenalan</div>
-  <h1>Bagaimana <em>Claude</em> boleh membantu kerja seharian sebagai Pembantu Makmal &amp; Penolong Pegawai Sains DVS</h1>
-  <p class="lede">
-    Bukan robot yang menggantikan kerja kita — tapi rakan kerja yang boleh tolong fikir,
-    tulis, semak dan susun, supaya masa kita lebih banyak untuk kerja teknikal
-    dan operasi makmal yang sebenar.
-  </p>
-  <div class="meta-row">
-    <div class="meta-card"><span>Audien</span>35 peserta PM &amp; PPS</div>
-    <div class="meta-card"><span>Pengalaman</span>2–3 tahun bertugas</div>
-    <div class="meta-card"><span>Fokus</span>Tugasan harian makmal &amp; pejabat</div>
-    <div class="meta-card"><span>Alat</span>Claude.ai (Web &amp; App)</div>
+<div id="intro" class="hero-bg">
+  <div class="hero-inner">
+    <div class="eyebrow">✦ Pengenalan — Sesi Taklimat DVS</div>
+    <h1>Bagaimana <em>Claude</em> boleh bantu kerja seharian PM &amp; PPS DVS</h1>
+    <p class="lede">
+      Bukan robot yang menggantikan kerja kita — tapi rakan kerja yang boleh tolong fikir,
+      tulis, semak dan susun, supaya masa kita lebih banyak untuk kerja teknikal
+      dan operasi makmal yang sebenar.
+    </p>
+    <div class="meta-row">
+      <div class="meta-card fade-up">
+        <span class="label">Audien</span>
+        <strong>35 peserta PM &amp; PPS</strong>
+      </div>
+      <div class="meta-card fade-up">
+        <span class="label">Pengalaman</span>
+        <strong>2–3 tahun bertugas</strong>
+      </div>
+      <div class="meta-card fade-up">
+        <span class="label">Fokus</span>
+        <strong>Tugasan harian makmal &amp; pejabat</strong>
+      </div>
+      <div class="meta-card fade-up">
+        <span class="label">Alat</span>
+        <strong>Claude.ai (Web &amp; App)</strong>
+      </div>
+    </div>
   </div>
-</section>
+</div>
 
 <!-- ================= SETUP ================= -->
-<section id="setup">
-  <div class="eyebrow">Spesimen 02 — Setup</div>
-  <h2>Mula dalam 2 minit</h2>
-  <p class="lede">Tak perlu install software berat atau setting rumit. Claude boleh terus digunakan dari browser atau telefon.</p>
+<div id="setup">
+  <div class="section-wrap">
+    <div class="eyebrow">⚙️ Setup</div>
+    <h2>Mula dalam 2 minit</h2>
+    <p class="lede">Tak perlu install software berat atau setting rumit. Claude boleh terus digunakan dari browser atau telefon.</p>
 
-  <div class="grid grid-3">
-    <div class="card">
-      <span class="label-no">A</span>
-      <h3>Daftar Akaun</h3>
-      <p>Pergi ke <strong>claude.ai</strong>, daftar guna emel (Google/Outlook pun boleh). Percuma untuk mula guna.</p>
+    <div class="grid grid-3">
+      <div class="card fade-up">
+        <span class="badge">A</span>
+        <h3>Daftar Akaun</h3>
+        <p>Pergi ke <strong>claude.ai</strong>, daftar guna emel (Google/Outlook pun boleh). Percuma untuk mula guna.</p>
+      </div>
+      <div class="card fade-up">
+        <span class="badge">B</span>
+        <h3>Buka Chat Baru</h3>
+        <p>Macam WhatsApp — taip apa yang nak ditanya atau minta dibuat, dalam Bahasa Melayu pun boleh.</p>
+      </div>
+      <div class="card fade-up">
+        <span class="badge">C</span>
+        <h3>Lampir Fail</h3>
+        <p>Boleh upload gambar, PDF, Excel atau Word terus dalam chat untuk Claude baca dan analisa.</p>
+      </div>
     </div>
-    <div class="card">
-      <span class="label-no">B</span>
-      <h3>Buka Chat Baru</h3>
-      <p>Macam WhatsApp — taip apa yang nak ditanya atau minta dibuat, dalam Bahasa Melayu pun boleh.</p>
-    </div>
-    <div class="card">
-      <span class="label-no">C</span>
-      <h3>Lampir Fail</h3>
-      <p>Boleh upload gambar, PDF, Excel atau Word terus dalam chat untuk Claude baca dan analisa.</p>
+
+    <div class="callout fade-up">
+      <div class="icon">💡</div>
+      <p><strong>Tip:</strong> Claude App (mobile) sesuai untuk soalan cepat di makmal —
+      contoh, snap gambar label spesimen dan tanya terjemahan atau maksud singkatan teknikal.</p>
     </div>
   </div>
-
-  <div class="callout">
-    <div class="icon">i</div>
-    <p><strong>Tip:</strong> Claude App (mobile) sesuai untuk soalan cepat di makmal —
-    contoh, snap gambar label spesimen dan tanya terjemahan atau maksud singkatan teknikal.</p>
-  </div>
-</section>
+</div>
 
 <!-- ================= INTEGRASI ================= -->
-<section id="integrasi">
-  <div class="eyebrow">Spesimen 03 — Integrasi dalam Tugasan</div>
-  <h2>Di mana Claude masuk dalam kerja harian kita?</h2>
-  <p class="lede">Daripada tugasan pentadbiran sampai ke analisis data — berikut contoh sebenar yang relevan dengan kerja PM/PPS.</p>
+<div id="integrasi">
+  <div class="section-wrap">
+    <div class="eyebrow">🔗 Integrasi dalam Tugasan</div>
+    <h2>Di mana Claude masuk dalam kerja harian kita?</h2>
+    <p class="lede">Daripada tugasan pentadbiran sampai ke analisis data — berikut contoh sebenar yang relevan dengan kerja PM/PPS di Institut Teknologi Unggas.</p>
 
-  <div class="grid grid-2">
-    <div class="card">
-      <span class="label-no">01</span>
-      <h3>Penulisan &amp; Pelaporan</h3>
-      <p>Draf laporan aktiviti, minit mesyuarat, surat rasmi, atau emel rasmi dalam BM yang kemas dan formal — siap dalam saat.</p>
-    </div>
-    <div class="card">
-      <span class="label-no">02</span>
-      <h3>Analisis Data Makmal</h3>
-      <p>Upload Excel keputusan ujian / rekod sampel, suruh Claude rumuskan trend, kira purata, atau buat carta ringkas.</p>
-    </div>
-    <div class="card">
-      <span class="label-no">03</span>
-      <h3>Rujukan SOP &amp; Protokol</h3>
-      <p>Tanya soalan tentang SOP makmal, prosedur biosafety, atau istilah sains veterinar — dapat penjelasan ringkas berdasarkan dokumen rujukan sendiri.</p>
-    </div>
-    <div class="card">
-      <span class="label-no">04</span>
-      <h3>Automasi Tugasan Berulang</h3>
-      <p>Bina skrip ringkas (Google Sheets/Forms) untuk tracking sampel, jadual penggunaan peralatan, atau borang permohonan — tanpa perlu jadi programmer.</p>
-    </div>
-  </div>
-
-  <div style="margin-top:40px;">
-    <h3 style="font-family:var(--serif); font-size:20px; color:var(--teal-deep); margin-bottom:14px;">Contoh Cepat — Live Demo</h3>
-    <div class="demo-shell">
-      <div class="demo-bar">
-        <div class="dots"><span></span><span></span><span></span></div>
-        <span>claude.ai — sesi chat</span>
+    <div class="grid grid-2">
+      <div class="card fade-up">
+        <span class="badge">01</span>
+        <h3>Penulisan &amp; Pelaporan</h3>
+        <p>Draf laporan aktiviti, minit mesyuarat, surat rasmi, atau emel rasmi dalam BM yang kemas dan formal — siap dalam saat.</p>
       </div>
-      <div class="demo-body">
-        <div class="demo-tabs">
-          <div class="demo-tab active" data-demo="surat">📄 Draf Surat</div>
-          <div class="demo-tab" data-demo="data">📊 Analisis Data</div>
-          <div class="demo-tab" data-demo="sop">📋 Rujuk SOP</div>
+      <div class="card fade-up">
+        <span class="badge">02</span>
+        <h3>Analisis Data Makmal</h3>
+        <p>Upload Excel keputusan ujian / rekod sampel, suruh Claude rumuskan trend, kira purata, atau buat carta ringkas.</p>
+      </div>
+      <div class="card fade-up">
+        <span class="badge">03</span>
+        <h3>Rujukan SOP &amp; Protokol</h3>
+        <p>Tanya soalan tentang SOP makmal, prosedur biosafety, atau istilah sains veterinar — dapat penjelasan ringkas berdasarkan dokumen rujukan sendiri.</p>
+      </div>
+      <div class="card fade-up">
+        <span class="badge">04</span>
+        <h3>Automasi Tugasan Berulang</h3>
+        <p>Bina skrip ringkas (Google Sheets/Forms) untuk tracking sampel, jadual penggunaan peralatan, atau borang permohonan — tanpa perlu jadi programmer.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;" class="fade-up">
+      <h3 style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:16px;">
+        Contoh Cepat — Live Demo
+      </h3>
+      <div class="demo-shell">
+        <div class="demo-bar">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <span>claude.ai — sesi chat</span>
         </div>
-        <div id="demo-content"></div>
+        <div class="demo-body">
+          <div class="demo-tabs">
+            <div class="demo-tab active" data-demo="surat">📄 Draf Surat</div>
+            <div class="demo-tab" data-demo="data">📊 Analisis Data</div>
+            <div class="demo-tab" data-demo="sop">📋 Rujuk SOP</div>
+          </div>
+          <div id="demo-content"></div>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ================= SKILL ================= -->
-<section id="skill">
-  <div class="eyebrow">Spesimen 04 — Skill yang Berguna</div>
-  <h2>5 kebolehan yang patut PM/PPS tahu</h2>
-  <p class="lede">Lima ciri ini yang paling kerap akan digunakan dalam konteks kerja makmal.</p>
+<div id="skill">
+  <div class="section-wrap">
+    <div class="eyebrow">⚡ Skill yang Berguna</div>
+    <h2>5 kebolehan yang patut PM/PPS tahu</h2>
+    <p class="lede">Lima ciri ini yang paling kerap akan digunakan dalam konteks kerja makmal dan pejabat.</p>
 
-  <div class="compare">
-    <div class="compare-row">
-      <div>Ciri</div>
-      <div>Kegunaan dalam kerja makmal</div>
-    </div>
-    <div class="compare-row">
-      <div>Baca Dokumen / Gambar</div>
-      <div>Upload manual, sijil, label, atau gambar peralatan — Claude boleh terangkan, terjemah atau ringkaskan.</div>
-    </div>
-    <div class="compare-row">
-      <div>Tulisan &amp; Terjemahan</div>
-      <div>Tukar nota ringkas jadi laporan formal, atau terjemah artikel sains EN → BM dengan cepat.</div>
-    </div>
-    <div class="compare-row">
-      <div>Excel / Data</div>
-      <div>Susun, kira, dan visualkan data rekod makmal tanpa formula rumit.</div>
-    </div>
-    <div class="compare-row">
-      <div>Buat Carta / Visual</div>
-      <div>Minta carta perbandingan, jadual ringkas, atau diagram proses untuk taklimat.</div>
-    </div>
-    <div class="compare-row">
-      <div>"Projects" / Sejarah Chat</div>
-      <div>Susun chat mengikut tugasan (contoh: "Laporan Bulanan", "SOP Makmal A") supaya senang rujuk balik.</div>
+    <div class="compare fade-up">
+      <div class="compare-row">
+        <div>Ciri</div>
+        <div>Kegunaan dalam kerja makmal</div>
+      </div>
+      <div class="compare-row">
+        <div>Baca Dokumen / Gambar</div>
+        <div>Upload manual, sijil, label, atau gambar peralatan — Claude boleh terangkan, terjemah atau ringkaskan.</div>
+      </div>
+      <div class="compare-row">
+        <div>Tulisan &amp; Terjemahan</div>
+        <div>Tukar nota ringkas jadi laporan formal, atau terjemah artikel sains EN → BM dengan cepat.</div>
+      </div>
+      <div class="compare-row">
+        <div>Excel / Data</div>
+        <div>Susun, kira, dan visualkan data rekod makmal tanpa formula rumit.</div>
+      </div>
+      <div class="compare-row">
+        <div>Buat Carta / Visual</div>
+        <div>Minta carta perbandingan, jadual ringkas, atau diagram proses untuk taklimat.</div>
+      </div>
+      <div class="compare-row">
+        <div>"Projects" / Sejarah Chat</div>
+        <div>Susun chat mengikut tugasan (contoh: "Laporan Bulanan", "SOP Makmal A") supaya senang rujuk balik.</div>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ================= DEBUG ================= -->
-<section id="debug">
-  <div class="eyebrow">Spesimen 05 — Debug &amp; Perkara Perlu Diingat</div>
-  <h2>Bila AI tersilap — dan macam mana handle</h2>
-  <p class="lede">AI sangat berguna, tapi bukan sempurna. Beberapa garis panduan supaya guna AI dengan selamat dan berkesan.</p>
+<div id="debug">
+  <div class="section-wrap">
+    <div class="eyebrow">🔍 Debug &amp; Perkara Perlu Diingat</div>
+    <h2>Bila AI tersilap — dan macam mana handle</h2>
+    <p class="lede">AI sangat berguna, tapi bukan sempurna. Beberapa garis panduan supaya guna AI dengan selamat dan berkesan.</p>
 
-  <div class="grid grid-2">
-    <div class="card">
-      <span class="label-no">!</span>
-      <h3>Sentiasa Semak Output</h3>
-      <p>Claude boleh tersilap fakta atau nombor (dipanggil "hallucination"). Untuk data penting (keputusan ujian, angka rasmi), sentiasa verify sebelum guna.</p>
-    </div>
-    <div class="card">
-      <span class="label-no">!</span>
-      <h3>Jangan Kongsi Data Sulit</h3>
-      <p>Elakkan upload maklumat sulit/rasmi (data pesakit, dokumen sulit kerajaan) tanpa kebenaran — ikut SOP keselamatan data pejabat.</p>
-    </div>
-    <div class="card">
-      <span class="label-no">!</span>
-      <h3>Arahan yang Jelas = Hasil Lebih Baik</h3>
-      <p>Bagi konteks lengkap: siapa audien, tujuan, format yang diingini. Contoh: "Tulis dalam BM formal untuk surat rasmi ke JPV" lebih baik dari "tulis surat".</p>
-    </div>
-    <div class="card">
-      <span class="label-no">!</span>
-      <h3>AI Bantu, Bukan Gantikan Kepakaran</h3>
-      <p>Keputusan teknikal dan saintifik tetap perlu pertimbangan profesional kita — Claude alat sokongan, bukan pegawai sains.</p>
+    <div class="grid grid-2">
+      <div class="card fade-up">
+        <span class="badge red">!</span>
+        <h3>Sentiasa Semak Output</h3>
+        <p>Claude boleh tersilap fakta atau nombor (dipanggil "hallucination"). Untuk data penting (keputusan ujian, angka rasmi), sentiasa verify sebelum guna.</p>
+      </div>
+      <div class="card fade-up">
+        <span class="badge red">!</span>
+        <h3>Jangan Kongsi Data Sulit</h3>
+        <p>Elakkan upload maklumat sulit/rasmi (data pesakit, dokumen sulit kerajaan) tanpa kebenaran — ikut SOP keselamatan data pejabat.</p>
+      </div>
+      <div class="card fade-up">
+        <span class="badge red">!</span>
+        <h3>Arahan yang Jelas = Hasil Lebih Baik</h3>
+        <p>Bagi konteks lengkap: siapa audien, tujuan, format yang diingini. Contoh: "Tulis dalam BM formal untuk surat rasmi ke JPV" lebih baik dari "tulis surat".</p>
+      </div>
+      <div class="card fade-up">
+        <span class="badge red">!</span>
+        <h3>AI Bantu, Bukan Gantikan Kepakaran</h3>
+        <p>Keputusan teknikal dan saintifik tetap perlu pertimbangan profesional kita — Claude alat sokongan, bukan pegawai sains.</p>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ================= DEPLOY ================= -->
-<section id="deploy">
-  <div class="eyebrow">Spesimen 06 — Deploy</div>
-  <h2>Mula guna esok — langkah praktikal</h2>
-  <p class="lede">Tak perlu tunggu "masa sesuai". Berikut 4 langkah ringkas untuk setiap peserta cuba sendiri selepas sesi ini.</p>
+<div id="deploy">
+  <div class="section-wrap">
+    <div class="eyebrow">🚀 Deploy — Mula Sekarang</div>
+    <h2>Mula guna esok — langkah praktikal</h2>
+    <p class="lede">Tak perlu tunggu "masa sesuai". Berikut 4 langkah ringkas untuk setiap peserta cuba sendiri selepas sesi ini.</p>
 
-  <div class="steps">
-    <div class="step">
-      <div class="num"></div>
-      <div>
-        <h4>Daftar akaun Claude.ai (percuma)</h4>
-        <p>Guna emel pejabat atau peribadi. Ambil masa kurang 2 minit.</p>
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="num"></div>
+        <div>
+          <h4>Daftar akaun Claude.ai (percuma)</h4>
+          <p>Guna emel pejabat atau peribadi. Ambil masa kurang 2 minit.</p>
+        </div>
       </div>
-    </div>
-    <div class="step">
-      <div class="num"></div>
-      <div>
-        <h4>Pilih satu tugasan kecil minggu ini</h4>
-        <p>Contoh: draf satu emel rasmi, atau ringkaskan satu dokumen panjang.</p>
+      <div class="step fade-up">
+        <div class="num"></div>
+        <div>
+          <h4>Pilih satu tugasan kecil minggu ini</h4>
+          <p>Contoh: draf satu emel rasmi, atau ringkaskan satu dokumen panjang.</p>
+        </div>
       </div>
-    </div>
-    <div class="step">
-      <div class="num"></div>
-      <div>
-        <h4>Beri arahan dengan konteks penuh</h4>
-        <p>Nyatakan tujuan, audien, dan format — semakin spesifik, semakin tepat hasilnya.</p>
+      <div class="step fade-up">
+        <div class="num"></div>
+        <div>
+          <h4>Beri arahan dengan konteks penuh</h4>
+          <p>Nyatakan tujuan, audien, dan format — semakin spesifik, semakin tepat hasilnya.</p>
+        </div>
       </div>
-    </div>
-    <div class="step">
-      <div class="num"></div>
-      <div>
-        <h4>Semak, edit, dan kongsi pengalaman</h4>
-        <p>Semak hasil sebelum guna rasmi. Kongsi dengan rakan sekerja apa yang berjaya — kita belajar bersama.</p>
+      <div class="step fade-up">
+        <div class="num"></div>
+        <div>
+          <h4>Semak, edit, dan kongsi pengalaman</h4>
+          <p>Semak hasil sebelum guna rasmi. Kongsi dengan rakan sekerja apa yang berjaya — kita belajar bersama.</p>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <footer>
-  Disediakan untuk taklimat Pembantu Makmal &amp; Penolong Pegawai Sains — , <span>Jabatan Perkhidmatan Veterinar</span>
+  <div class="footer-brand">Claude di Makmal 🐾</div>
+  Disediakan untuk taklimat PM &amp; PPS — Institut Teknologi Unggas, <span>Jabatan Perkhidmatan Veterinar</span>
 </footer>
 
 <script>
-  // Active nav highlight on scroll
-  const links = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('section[id]');
+  // ===== ACTIVE NAV ON SCROLL =====
+  const navLinks = document.querySelectorAll('.nav-link');
+  const anchors  = ['intro','setup','integrasi','skill','debug','deploy'];
   window.addEventListener('scroll', () => {
-    let current = sections[0].id;
-    sections.forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+    let current = anchors[0];
+    anchors.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 130) current = id;
     });
-    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
   });
 
-  // Demo tabs content
+  // ===== FADE-UP WITH INTERSECTION OBSERVER =====
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.10 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  }
+
+  // ===== DEMO CHAT TABS =====
   const demoData = {
     surat: {
       user: "Tolong draf surat permohonan kelulusan untuk beli reagen makmal baru, hantar kepada Ketua Jabatan.",
-      ai: "Berikut draf surat:<br><br><em>\"Tuan,<br>Permohonan Kelulusan Pembelian Reagen Makmal<br><br>Dengan segala hormatnya saya memohon kelulusan tuan bagi pembelian reagen makmal yang telah hampir kehabisan stok bagi keperluan ujian rutin di makmal...\"</em><br><br>— boleh edit lanjut mengikut keperluan sebenar."
+      ai:   "Berikut draf surat:<br><br><em>\"Tuan,<br>Permohonan Kelulusan Pembelian Reagen Makmal<br><br>Dengan segala hormatnya saya memohon kelulusan tuan bagi pembelian reagen makmal yang telah hampir kehabisan stok bagi keperluan ujian rutin di Institut Teknologi Unggas...\"</em><br><br>— boleh edit lanjut mengikut keperluan sebenar."
     },
     data: {
       user: "Saya upload Excel keputusan ujian sampel bulan ini. Boleh rumuskan trend dan tunjuk mana sampel yang luar julat normal?",
-      ai: "Berdasarkan data yang dimuat naik:<br>• 42 daripada 50 sampel dalam julat normal<br>• 8 sampel melebihi nilai rujukan, kebanyakan dari Kumpulan B<br>• Trend menunjukkan peningkatan kecil berbanding bulan lepas<br><br>Boleh saya jana carta perbandingan bulanan untuk laporan?"
+      ai:   "Berdasarkan data yang dimuat naik:<br>• 42 daripada 50 sampel dalam julat normal<br>• 8 sampel melebihi nilai rujukan, kebanyakan dari Kumpulan B<br>• Trend menunjukkan peningkatan kecil berbanding bulan lepas<br><br>Boleh saya jana carta perbandingan bulanan untuk laporan?"
     },
     sop: {
       user: "Apa langkah pelupusan sampel biohazard mengikut SOP makmal kita? (saya upload dokumen SOP)",
-      ai: "Berdasarkan dokumen SOP yang dikongsi, langkah utama:<br>1. Asingkan sampel mengikut kategori risiko<br>2. Guna bekas berlabel biohazard yang ditetapkan<br>3. Rekod dalam log pelupusan sebelum diserahkan ke pihak bertugas<br><br>Nak saya ringkaskan jadi senarai semak (checklist) untuk dicetak?"
+      ai:   "Berdasarkan dokumen SOP yang dikongsi, langkah utama:<br>1. Asingkan sampel mengikut kategori risiko<br>2. Guna bekas berlabel biohazard yang ditetapkan<br>3. Rekod dalam log pelupusan sebelum diserahkan ke pihak bertugas<br><br>Nak saya ringkaskan jadi senarai semak (checklist) untuk dicetak?"
     }
   };
 
-  const tabs = document.querySelectorAll('.demo-tab');
+  const tabs    = document.querySelectorAll('.demo-tab');
   const content = document.getElementById('demo-content');
-  function renderDemo(key){
+
+  function renderDemo(key) {
     const d = demoData[key];
     content.innerHTML = `
       <div class="bubble user"><span class="who">Anda</span>${d.user}</div>
       <div class="bubble ai"><span class="who">Claude</span>${d.ai}</div>
     `;
   }
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
@@ -503,6 +687,7 @@
       renderDemo(tab.dataset.demo);
     });
   });
+
   renderDemo('surat');
 </script>
 
