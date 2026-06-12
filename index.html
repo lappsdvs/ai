@@ -97,10 +97,7 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 0 rgba(0,0,0,0.14);
   }
-  nav a:active {
-    transform: translateY(1px);
-    box-shadow: var(--shadow-btn-press);
-  }
+  nav a:active { transform: translateY(1px); box-shadow: var(--shadow-btn-press); }
   nav a.active {
     background: var(--clay-yellow); color: var(--ink);
     border-color: var(--clay-yellow);
@@ -114,7 +111,6 @@
     border-bottom: 1px solid var(--line);
   }
   .section-wrap:last-of-type { border-bottom: none; }
-
   .eyebrow {
     display: inline-flex; align-items: center; gap: 7px;
     font-family: var(--body); font-size: 12px; font-weight: 700;
@@ -157,7 +153,6 @@
     background-clip: text;
   }
   .hero-inner .lede { font-size: 19px; max-width: 640px; }
-
   .meta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
   .meta-card {
     background: var(--clay-white);
@@ -165,10 +160,7 @@
     box-shadow: var(--shadow-card);
     transition: transform 0.22s ease, box-shadow 0.22s ease;
   }
-  .meta-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: var(--shadow-card-hover);
-  }
+  .meta-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: var(--shadow-card-hover); }
   .meta-card .label {
     display: block; font-size: 11px; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase;
@@ -188,10 +180,7 @@
     box-shadow: var(--shadow-card);
     transition: transform 0.22s ease, box-shadow 0.22s ease;
   }
-  .card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: var(--shadow-card-hover);
-  }
+  .card:hover { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-card-hover); }
   .card .badge {
     position: absolute; top: -14px; left: 22px;
     background: var(--clay-blue);
@@ -200,21 +189,16 @@
     padding: 5px 14px; border-radius: 50px;
     box-shadow: 0 3px 0 var(--clay-blue-deep);
   }
-  .card .badge.red {
-    background: var(--clay-red);
-    box-shadow: 0 3px 0 var(--clay-red-deep);
-  }
+  .card .badge.red { background: var(--clay-red); box-shadow: 0 3px 0 var(--clay-red-deep); }
   .card h3 {
-    font-family: var(--display);
-    font-weight: 700; font-size: 20px;
+    font-family: var(--display); font-weight: 700; font-size: 20px;
     color: var(--ink); margin: 14px 0 10px;
   }
   .card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
 
   /* ===== CALLOUT ===== */
   .callout {
-    border-radius: 18px;
-    background: #FFFBF0;
+    border-radius: 18px; background: #FFFBF0;
     border: 1.5px solid rgba(255,199,44,0.5);
     padding: 20px 22px;
     display: flex; gap: 14px; align-items: flex-start;
@@ -223,38 +207,189 @@
   }
   .callout .icon {
     width: 36px; height: 36px; flex-shrink: 0;
-    background: var(--clay-yellow);
-    border-radius: 11px;
+    background: var(--clay-yellow); border-radius: 11px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+    font-size: 18px; box-shadow: 0 3px 0 rgba(0,0,0,0.12);
   }
   .callout p { font-size: 14.5px; color: #5b4a1a; line-height: 1.65; }
   .callout strong { color: #8B6A00; }
 
+  /* ===== QR CARD ===== */
+  .qr-section {
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+    background: var(--clay-white);
+    border-radius: 22px; padding: 28px 32px;
+    margin-top: 28px;
+    box-shadow: var(--shadow-card);
+  }
+  .qr-wrap {
+    background: var(--clay-cream);
+    padding: 14px; border-radius: 16px;
+    border: 2px solid var(--line);
+    flex-shrink: 0;
+  }
+  .qr-wrap img, .qr-wrap canvas { display: block; border-radius: 8px; }
+  .qr-info { flex: 1; min-width: 180px; }
+  .qr-info h3 {
+    font-family: var(--display); font-weight: 700; font-size: 20px;
+    color: var(--ink); margin-bottom: 8px;
+  }
+  .qr-info p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 12px; }
+  .qr-url {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(30,79,160,0.08); color: var(--clay-blue);
+    font-weight: 700; font-size: 14px;
+    padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid rgba(30,79,160,0.2);
+    text-decoration: none;
+  }
+
+  /* ===== BEFORE / AFTER ===== */
+  .ba-wrap { margin-top: 36px; }
+  .ba-label {
+    font-family: var(--display); font-weight: 700; font-size: 18px;
+    color: var(--ink); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ba-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .ba-card { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-card); }
+  .ba-header {
+    padding: 12px 20px;
+    font-family: var(--display); font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ba-header.before { background: #F0F0F4; color: var(--ink-soft); }
+  .ba-header.after  {
+    background: linear-gradient(135deg, var(--clay-blue), #5087D6);
+    color: #fff;
+  }
+  .ba-body {
+    background: var(--clay-white); padding: 18px 20px;
+    font-size: 13.5px; color: var(--ink-soft);
+    line-height: 1.7; min-height: 200px;
+    white-space: pre-line;
+  }
+  .ba-body.after-body { color: var(--ink); }
+  .ba-body strong { color: var(--clay-blue); font-weight: 700; }
+  .ba-tag {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 50px; margin-bottom: 8px;
+  }
+  .ba-tag.pos { background: rgba(30,79,160,0.1); color: var(--clay-blue); }
+  .ba-tag.neg { background: rgba(211,47,47,0.1); color: var(--clay-red); }
+
+  /* ===== CUBA SENDIRI ===== */
+  .cuba-card {
+    margin-top: 28px;
+    background: linear-gradient(135deg, rgba(30,79,160,0.05) 0%, rgba(255,199,44,0.07) 100%);
+    border: 2px solid rgba(30,79,160,0.16);
+    border-radius: 22px; padding: 28px 28px 24px;
+    box-shadow: var(--shadow-card);
+  }
+  .cuba-card .cuba-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--clay-blue);
+    background: rgba(30,79,160,0.1); padding: 4px 12px;
+    border-radius: 50px; margin-bottom: 12px;
+  }
+  .cuba-card h3 {
+    font-family: var(--display); font-weight: 700; font-size: 20px;
+    color: var(--ink); margin-bottom: 8px;
+  }
+  .cuba-card .desc {
+    font-size: 14.5px; color: var(--ink-soft);
+    line-height: 1.6; margin-bottom: 16px;
+  }
+  .prompt-box {
+    background: var(--clay-white);
+    border: 1.5px solid var(--line);
+    border-left: 4px solid var(--clay-yellow);
+    border-radius: 14px; padding: 16px 18px;
+    font-size: 14.5px; color: var(--ink);
+    line-height: 1.7; margin-bottom: 16px;
+    font-style: italic;
+  }
+  .copy-btn {
+    font-family: var(--body); font-size: 14px; font-weight: 700;
+    background: var(--clay-blue); color: #fff;
+    border: none; border-radius: 50px; cursor: pointer;
+    padding: 11px 24px;
+    box-shadow: var(--shadow-btn);
+    transition: transform 0.12s, box-shadow 0.12s, background 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+    user-select: none;
+  }
+  .copy-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+  .copy-btn:active { transform: translateY(2px); box-shadow: var(--shadow-btn-press); }
+  .copy-btn.copied { background: #1a7a1a; }
+
+  /* ===== FAQ ACCORDION ===== */
+  .faq-list { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+  .faq-item {
+    background: var(--clay-white);
+    border-radius: 18px; overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.22s;
+  }
+  .faq-item.open { box-shadow: var(--shadow-card-hover); }
+  .faq-q {
+    width: 100%; background: none; border: none; cursor: pointer;
+    text-align: left; padding: 18px 22px;
+    font-family: var(--display); font-size: 16px; font-weight: 700;
+    color: var(--ink);
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    transition: background 0.15s;
+  }
+  .faq-q:hover { background: rgba(30,79,160,0.04); }
+  .faq-q .arrow {
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    background: rgba(30,79,160,0.09);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: background 0.2s;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .faq-q .arrow { transition: transform 0.3s ease, background 0.2s; }
+  }
+  .faq-q[aria-expanded="true"] .arrow {
+    transform: rotate(180deg);
+    background: var(--clay-blue); color: #fff;
+  }
+  .faq-a {
+    overflow: hidden;
+    max-height: 0;
+    padding: 0 22px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .faq-a { transition: max-height 0.38s ease, padding 0.38s ease; }
+  }
+  .faq-a.open { max-height: 600px; padding: 0 22px 20px; }
+  .faq-a p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.7; }
+  .faq-a strong { color: var(--ink); }
+
   /* ===== DEMO CHAT ===== */
   .demo-shell {
     border-radius: 22px; overflow: hidden;
-    background: var(--clay-white);
-    box-shadow: var(--shadow-card);
+    background: var(--clay-white); box-shadow: var(--shadow-card);
   }
   .demo-bar {
     background: var(--clay-blue-deep); color: #fff;
     font-family: var(--body); font-size: 13px; font-weight: 600;
-    padding: 12px 18px;
-    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px; display: flex; align-items: center; gap: 10px;
   }
   .demo-bar .dots { display: flex; gap: 6px; }
-  .demo-bar .dots span {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: rgba(255,255,255,0.28);
-  }
+  .demo-bar .dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.28); }
   .demo-body { padding: 22px; min-height: 230px; }
   .demo-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
   .demo-tab {
     font-family: var(--body); font-size: 13px; font-weight: 600;
-    background: rgba(30,79,160,0.08);
-    border: 1.5px solid rgba(30,79,160,0.15);
+    background: rgba(30,79,160,0.08); border: 1.5px solid rgba(30,79,160,0.15);
     padding: 8px 16px; border-radius: 50px;
     cursor: pointer; color: var(--clay-blue);
     box-shadow: 0 2px 0 rgba(30,79,160,0.15);
@@ -263,57 +398,21 @@
   }
   .demo-tab:hover { background: rgba(30,79,160,0.14); transform: translateY(-1px); }
   .demo-tab:active { transform: translateY(1px); box-shadow: none; }
-  .demo-tab.active {
-    background: var(--clay-blue); border-color: var(--clay-blue);
-    color: #fff; box-shadow: 0 3px 0 var(--clay-blue-deep);
-  }
-  .bubble {
-    border-radius: 18px; padding: 14px 18px; font-size: 14.5px;
-    margin-bottom: 12px; max-width: 92%; line-height: 1.6;
-  }
-  .bubble.user {
-    background: rgba(30,79,160,0.07); margin-left: auto;
-    border: 1.5px solid rgba(30,79,160,0.12);
-  }
-  .bubble.ai {
-    background: #EEF4FF;
-    border: 1.5px solid rgba(30,79,160,0.18);
-    border-left: 4px solid var(--clay-blue);
-  }
-  .bubble .who {
-    display: block; font-size: 10.5px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--clay-blue); margin-bottom: 6px;
-  }
+  .demo-tab.active { background: var(--clay-blue); border-color: var(--clay-blue); color: #fff; box-shadow: 0 3px 0 var(--clay-blue-deep); }
+  .bubble { border-radius: 18px; padding: 14px 18px; font-size: 14.5px; margin-bottom: 12px; max-width: 92%; line-height: 1.6; }
+  .bubble.user { background: rgba(30,79,160,0.07); margin-left: auto; border: 1.5px solid rgba(30,79,160,0.12); }
+  .bubble.ai { background: #EEF4FF; border: 1.5px solid rgba(30,79,160,0.18); border-left: 4px solid var(--clay-blue); }
+  .bubble .who { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--clay-blue); margin-bottom: 6px; }
   .bubble.user .who { color: var(--ink-soft); text-align: right; }
 
   /* ===== COMPARE TABLE ===== */
-  .compare {
-    background: var(--clay-white);
-    border-radius: 22px; overflow: hidden;
-    box-shadow: var(--shadow-card);
-  }
-  .compare-row {
-    display: grid; grid-template-columns: 1fr 1.8fr;
-    border-top: 1px solid var(--line);
-  }
-  .compare-row:first-child {
-    border-top: none;
-    background: linear-gradient(135deg, var(--clay-blue), var(--clay-blue-light));
-  }
+  .compare { background: var(--clay-white); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-card); }
+  .compare-row { display: grid; grid-template-columns: 1fr 1.8fr; border-top: 1px solid var(--line); }
+  .compare-row:first-child { border-top: none; background: linear-gradient(135deg, var(--clay-blue), var(--clay-blue-light)); }
   .compare-row div { padding: 14px 20px; font-size: 14px; }
-  .compare-row:first-child div {
-    color: #fff; font-size: 12px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-  }
-  .compare-row:first-child div:first-child {
-    border-right: 1px solid rgba(255,255,255,0.15);
-    color: var(--clay-yellow);
-  }
-  .compare-row div:first-child {
-    border-right: 1px solid var(--line);
-    font-weight: 600; color: var(--ink);
-  }
+  .compare-row:first-child div { color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .compare-row:first-child div:first-child { border-right: 1px solid rgba(255,255,255,0.15); color: var(--clay-yellow); }
+  .compare-row div:first-child { border-right: 1px solid var(--line); font-weight: 600; color: var(--ink); }
   .compare-row:not(:first-child) div:nth-child(2) { color: var(--ink-soft); }
   .compare-row:not(:first-child):hover { background: rgba(30,79,160,0.04); }
 
@@ -322,42 +421,29 @@
   .step {
     counter-increment: step;
     display: flex; gap: 20px; align-items: flex-start;
-    background: var(--clay-white);
-    border-radius: 22px; padding: 22px 24px;
+    background: var(--clay-white); border-radius: 22px; padding: 22px 24px;
     box-shadow: var(--shadow-card);
     transition: transform 0.22s ease, box-shadow 0.22s ease;
   }
-  .step:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-card-hover);
-  }
+  .step:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-hover); }
   .step .num {
-    font-family: var(--display); font-weight: 800; font-size: 26px;
-    color: #fff;
+    font-family: var(--display); font-weight: 800; font-size: 26px; color: #fff;
     background: linear-gradient(135deg, var(--clay-blue), #5087D6);
     min-width: 52px; height: 52px; flex-shrink: 0;
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
+    border-radius: 16px; display: flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 0 var(--clay-blue-deep);
   }
   .step .num::before { content: counter(step, decimal-leading-zero); }
-  .step h4 {
-    font-family: var(--display); font-weight: 700; font-size: 17px;
-    color: var(--ink); margin-bottom: 6px;
-  }
+  .step h4 { font-family: var(--display); font-weight: 700; font-size: 17px; color: var(--ink); margin-bottom: 6px; }
   .step p { font-size: 14.5px; color: var(--ink-soft); }
 
   /* ===== FOOTER ===== */
   footer {
     background: linear-gradient(135deg, var(--clay-blue-deep) 0%, var(--clay-blue) 100%);
-    color: rgba(255,255,255,0.75);
-    padding: 44px 24px; text-align: center;
+    color: rgba(255,255,255,0.75); padding: 44px 24px; text-align: center;
     font-size: 13.5px; font-weight: 500;
   }
-  .footer-brand {
-    font-family: var(--display); font-size: 22px; font-weight: 800;
-    color: #fff; margin-bottom: 10px;
-  }
+  .footer-brand { font-family: var(--display); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
   footer span { color: var(--clay-yellow); font-weight: 700; }
 
   /* ===== RESPONSIVE ===== */
@@ -369,6 +455,8 @@
     .hero-inner { padding: 64px 16px; }
     .compare-row { grid-template-columns: 1fr; }
     .compare-row div:first-child { border-right: none; border-bottom: 1px solid var(--line); }
+    .ba-grid { grid-template-columns: 1fr; }
+    .qr-section { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
@@ -406,22 +494,10 @@
       dan operasi makmal yang sebenar.
     </p>
     <div class="meta-row">
-      <div class="meta-card fade-up">
-        <span class="label">Audien</span>
-        <strong>35 peserta PM &amp; PPS</strong>
-      </div>
-      <div class="meta-card fade-up">
-        <span class="label">Pengalaman</span>
-        <strong>2–3 tahun bertugas</strong>
-      </div>
-      <div class="meta-card fade-up">
-        <span class="label">Fokus</span>
-        <strong>Tugasan harian makmal &amp; pejabat</strong>
-      </div>
-      <div class="meta-card fade-up">
-        <span class="label">Alat</span>
-        <strong>Claude.ai (Web &amp; App)</strong>
-      </div>
+      <div class="meta-card fade-up"><span class="label">Audien</span><strong>35 peserta PM &amp; PPS</strong></div>
+      <div class="meta-card fade-up"><span class="label">Pengalaman</span><strong>2–3 tahun bertugas</strong></div>
+      <div class="meta-card fade-up"><span class="label">Fokus</span><strong>Tugasan harian makmal &amp; pejabat</strong></div>
+      <div class="meta-card fade-up"><span class="label">Alat</span><strong>Claude.ai (Web &amp; App)</strong></div>
     </div>
   </div>
 </div>
@@ -456,6 +532,18 @@
       <p><strong>Tip:</strong> Claude App (mobile) sesuai untuk soalan cepat di makmal —
       contoh, snap gambar label spesimen dan tanya terjemahan atau maksud singkatan teknikal.</p>
     </div>
+
+    <!-- 3.1 QR CODE -->
+    <div class="qr-section fade-up">
+      <div class="qr-wrap">
+        <div id="qr-container"></div>
+      </div>
+      <div class="qr-info">
+        <h3>Scan untuk daftar sekarang</h3>
+        <p>Tujukan kamera telefon ke kod QR ini untuk terus ke laman pendaftaran Claude. Percuma, tiada kad kredit diperlukan.</p>
+        <a class="qr-url" href="https://claude.ai" target="_blank" rel="noopener">🔗 claude.ai</a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -489,6 +577,40 @@
       </div>
     </div>
 
+    <!-- 3.4 BEFORE / AFTER -->
+    <div class="ba-wrap fade-up">
+      <div class="ba-label">📝 Sebelum &amp; Selepas — Nota Makmal → Laporan Rasmi</div>
+      <div class="ba-grid">
+        <div class="ba-card">
+          <div class="ba-header before">📋 Sebelum — Nota Mentah</div>
+          <div class="ba-body">ujian HI H5N1 — 10/6/2026
+12 sampel ayam, kump A-C
+
+kump A (6 ekor): negative
+kump B (4 ekor): positive, titre 1:64
+kump C (2 ekor): positive, titre 1:128
+
+perlu buat laporan ke ketua
+ada trend meningkat dari bulan lepas</div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-header after">✨ Selepas — Output Claude</div>
+          <div class="ba-body after-body"><strong>LAPORAN UJIAN SEROLOGI — HI Test</strong>
+Penyakit: Avian Influenza H5N1
+Tarikh: 10 Jun 2026
+
+<span class="ba-tag pos">Ringkasan Keputusan</span>
+• Kumpulan A (6 ekor): <strong>Negatif</strong>
+• Kumpulan B (4 ekor): <strong>Positif</strong> — Titer 1:64
+• Kumpulan C (2 ekor): <strong>Positif</strong> — Titer 1:128
+
+<span class="ba-tag neg">Pemerhatian</span>
+6 daripada 12 sampel (50%) menunjukkan tindak balas antibodi positif dengan peningkatan titer berbanding bulan lepas. Dicadangkan pemantauan lanjut dijalankan.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE DEMO -->
     <div style="margin-top:40px;" class="fade-up">
       <h3 style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:16px;">
         Contoh Cepat — Live Demo
@@ -544,6 +666,20 @@
         <div>Susun chat mengikut tugasan (contoh: "Laporan Bulanan", "SOP Makmal A") supaya senang rujuk balik.</div>
       </div>
     </div>
+
+    <!-- 3.2 CUBA SENDIRI -->
+    <div class="cuba-card fade-up">
+      <div class="cuba-eyebrow">🧪 Cuba Sendiri</div>
+      <h3>Prompt siap pakai — copy &amp; guna terus</h3>
+      <p class="desc">Copy prompt di bawah, tampal ke Claude, kemudian gantikan bahagian dalam [ ] dengan kandungan kerja sebenar anda.</p>
+      <div class="prompt-box" id="cuba-prompt">
+        Tukar nota makmal ringkas ini jadi laporan rasmi dalam Bahasa Melayu formal untuk dihantar kepada Ketua Jabatan. Pastikan format kemas, gunakan ayat lengkap, dan tambah kesimpulan ringkas. Nota: [tampal nota anda di sini]
+      </div>
+      <button class="copy-btn" id="copy-btn" onclick="copyPrompt()">
+        <span id="copy-icon">📋</span>
+        <span id="copy-text">Copy Prompt</span>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -574,6 +710,46 @@
         <span class="badge red">!</span>
         <h3>AI Bantu, Bukan Gantikan Kepakaran</h3>
         <p>Keputusan teknikal dan saintifik tetap perlu pertimbangan profesional kita — Claude alat sokongan, bukan pegawai sains.</p>
+      </div>
+    </div>
+
+    <!-- 3.3 FAQ ACCORDION -->
+    <div class="faq-list fade-up">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          AI akan gantikan kerja kita ke?
+          <span class="arrow">▾</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Tidak — Claude direka untuk <strong>menambah keupayaan</strong> kita, bukan menggantikan. Kerja makmal dan sains veterinar memerlukan pengetahuan domain, pertimbangan profesional, dan kemahiran fizikal yang AI tidak boleh lakukan. Claude hanya bantu bahagian pentadbiran dan penulisan supaya kita lebih fokus pada kerja teknikal sebenar.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Data yang kita taip selamat ke?
+          <span class="arrow">▾</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Anthropic (syarikat di sebalik Claude) mempunyai polisi privasi yang ketat. Namun, sebagai amalan terbaik: <strong>jangan taip maklumat sulit rasmi, nombor pesakit, atau data sensitif kerajaan</strong> ke dalam mana-mana sistem AI tanpa kebenaran pegawai atasan. Guna data dummy atau ringkasan umum bila perlu.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Perlu bayar ke untuk guna Claude?
+          <span class="arrow">▾</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Akaun <strong>percuma</strong> Claude sudah cukup untuk kebanyakan tugasan harian — draf surat, ringkasan dokumen, terjemahan, analisis data ringkas. Versi Pro (berbayar) memberi lebih banyak mesej sehari dan akses ke model terkini, tapi tidak wajib untuk bermula. Cuba free dulu!</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Macam mana kalau jawapan AI salah?
+          <span class="arrow">▾</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Dua cara terbaik: Pertama, <strong>berikan lebih konteks</strong> — "Jawapan tadi kurang tepat, saya maksudkan X, bukan Y. Cuba semula." Claude akan betulkan. Kedua, <strong>minta rujukan</strong> — "Boleh nyatakan sumber atau asas jawapan ini?" Jika AI tidak pasti, dia akan beritahu. Ingat: AI adalah draf pertama, bukan keputusan muktamad.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -624,6 +800,8 @@
   Disediakan untuk taklimat PM &amp; PPS — Institut Teknologi Unggas, <span>Jabatan Perkhidmatan Veterinar</span>
 </footer>
 
+<!-- qrcode.js dari CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
   // ===== ACTIVE NAV ON SCROLL =====
   const navLinks = document.querySelectorAll('.nav-link');
@@ -647,10 +825,61 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.10 });
+    }, { threshold: 0.08 });
     document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
   } else {
     document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  }
+
+  // ===== QR CODE =====
+  new QRCode(document.getElementById('qr-container'), {
+    text: 'https://claude.ai',
+    width: 160,
+    height: 160,
+    colorDark: '#0F3576',
+    colorLight: '#FFF8EC',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  // ===== COPY PROMPT =====
+  function copyPrompt() {
+    const prompt = document.getElementById('cuba-prompt').innerText.trim();
+    const btn    = document.getElementById('copy-btn');
+    const icon   = document.getElementById('copy-icon');
+    const text   = document.getElementById('copy-text');
+    navigator.clipboard.writeText(prompt).then(() => {
+      icon.textContent = '✓';
+      text.textContent = 'Disalin!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        icon.textContent = '📋';
+        text.textContent = 'Copy Prompt';
+        btn.classList.remove('copied');
+      }, 2200);
+    }).catch(() => {
+      text.textContent = 'Cuba lagi…';
+      setTimeout(() => { text.textContent = 'Copy Prompt'; }, 1800);
+    });
+  }
+
+  // ===== FAQ ACCORDION =====
+  function toggleFaq(btn) {
+    const item   = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-a');
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+    // tutup semua yang lain
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      i.querySelector('.faq-a').classList.remove('open');
+      i.classList.remove('open');
+    });
+
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded', 'true');
+      answer.classList.add('open');
+      item.classList.add('open');
+    }
   }
 
   // ===== DEMO CHAT TABS =====
@@ -671,7 +900,6 @@
 
   const tabs    = document.querySelectorAll('.demo-tab');
   const content = document.getElementById('demo-content');
-
   function renderDemo(key) {
     const d = demoData[key];
     content.innerHTML = `
@@ -679,7 +907,6 @@
       <div class="bubble ai"><span class="who">Claude</span>${d.ai}</div>
     `;
   }
-
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
@@ -687,7 +914,6 @@
       renderDemo(tab.dataset.demo);
     });
   });
-
   renderDemo('surat');
 </script>
 
