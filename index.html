@@ -446,6 +446,36 @@
   .footer-brand { font-family: var(--display); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
   footer span { color: var(--clay-yellow); font-weight: 700; }
 
+  /* ===== HEADER LOGOS ===== */
+  .brand-divider {
+    width: 1px; height: 30px;
+    background: rgba(255,255,255,0.22);
+    margin: 0 12px; flex-shrink: 0;
+  }
+  .logo-group { display: flex; align-items: center; gap: 8px; }
+  .logo-pill {
+    background: rgba(255,255,255,0.93);
+    border-radius: 10px; padding: 5px 10px;
+    height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.16);
+    flex-shrink: 0;
+  }
+  .logo-pill img {
+    height: 26px; width: auto;
+    object-fit: contain; display: block; max-width: 72px;
+  }
+
+  /* ===== FOOTER LOGOS ===== */
+  .footer-madani {
+    margin-bottom: 18px;
+    display: flex; justify-content: center;
+  }
+  .footer-madani img {
+    height: 52px; width: auto;
+    object-fit: contain; display: block; max-width: 200px;
+  }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 680px) {
     .hero-inner h1 { font-size: 34px; }
@@ -457,6 +487,10 @@
     .compare-row div:first-child { border-right: none; border-bottom: 1px solid var(--line); }
     .ba-grid { grid-template-columns: 1fr; }
     .qr-section { flex-direction: column; align-items: flex-start; }
+    .brand-divider { display: none; }
+    .logo-group { gap: 6px; }
+    .logo-pill { height: 32px; padding: 4px 7px; }
+    .logo-pill img { height: 20px; max-width: 52px; }
   }
 </style>
 </head>
@@ -470,6 +504,18 @@
       <div class="brand-text">
         <h1>Claude di Makmal</h1>
         <span class="sub">Jabatan Perkhidmatan Veterinar · ITU</span>
+      </div>
+      <div class="brand-divider"></div>
+      <div class="logo-group">
+        <div class="logo-pill">
+          <img src="assets/jata-kpkm.png" alt="Jata Kementerian Pertanian dan Keterjaminan Makanan">
+        </div>
+        <div class="logo-pill">
+          <img src="assets/logo-dvs.png" alt="Logo Jabatan Perkhidmatan Veterinar">
+        </div>
+        <div class="logo-pill">
+          <img src="assets/logo-laapps.png" alt="Logo LAAPPS Institut Teknologi Unggas">
+        </div>
       </div>
     </div>
     <nav>
@@ -797,6 +843,9 @@ Tarikh: 10 Jun 2026
 </div>
 
 <footer>
+  <div class="footer-madani">
+    <img src="assets/malaysia-madani.png" alt="Logo Malaysia MADANI">
+  </div>
   <div class="footer-brand">Claude di Makmal 🐾</div>
   Disediakan untuk taklimat PM &amp; PPS — Institut Teknologi Unggas, <span>Jabatan Perkhidmatan Veterinar</span>
 </footer>
