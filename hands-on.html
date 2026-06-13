@@ -274,6 +274,36 @@
   .callout p { font-size: 14.5px; color: #5b4a1a; line-height: 1.65; }
   .callout strong { color: #8B6A00; }
 
+  /* ===== PLATFORM NOTE (Claude / ChatGPT / Gemini) ===== */
+  .platform-note {
+    border-radius: 18px; background: #FFFBF0;
+    border: 1.5px solid rgba(255,199,44,0.5);
+    padding: 20px 22px; display: flex; gap: 14px; align-items: flex-start;
+    margin: 0 auto 36px; max-width: 1080px;
+    box-shadow: 0 3px 0 rgba(255,199,44,0.3), 0 6px 16px rgba(255,199,44,0.10);
+  }
+  .platform-note .icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--clay-yellow); border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+  }
+  .platform-note p { font-size: 14.5px; color: #5b4a1a; line-height: 1.65; margin-bottom: 14px; }
+  .platform-note strong { color: #8B6A00; }
+  .platform-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+  .platform-pill {
+    display: flex; flex-direction: column; gap: 3px;
+    padding: 10px 18px; border-radius: 14px;
+    background: var(--clay-white); text-decoration: none;
+    box-shadow: var(--shadow-card); transition: transform 0.12s, box-shadow 0.12s;
+    min-width: 160px;
+  }
+  .platform-pill:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+  .platform-pill .p-emoji { font-size: 20px; }
+  .platform-pill .p-name { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--ink); }
+  .platform-pill .p-by { font-size: 11px; color: var(--ink-soft); }
+  .pill-claude { border: 1.5px solid var(--clay-yellow); }
+
   /* ===== DOWNLOAD BUTTON ===== */
   .download-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
   .download-btn {
@@ -421,6 +451,33 @@
       <span class="hero-badge">⏱️ &nbsp;±45 minit</span>
       <span class="hero-badge">👥 &nbsp;Kerja individu / berkumpulan</span>
       <span class="hero-badge">💻 &nbsp;Perlu akaun Claude.ai</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PLATFORM NOTE ================= -->
+<div class="section-wrap" style="padding-bottom: 0;">
+  <div class="platform-note fade-up">
+    <div class="icon">🔄</div>
+    <div>
+      <p><strong>Tak ada akaun Claude?</strong> Tak mengapa! Semua prompt dalam workshop ini bersifat <strong>universal</strong> — boleh terus salin-tampal ke ChatGPT atau Gemini, hasilnya tetap berguna. Pilih platform yang anda dah ada akaun:</p>
+      <div class="platform-grid">
+        <a href="https://claude.ai" target="_blank" class="platform-pill pill-claude">
+          <span class="p-emoji">✶</span>
+          <span class="p-name">Claude</span>
+          <span class="p-by">Anthropic · claude.ai</span>
+        </a>
+        <a href="https://chatgpt.com" target="_blank" class="platform-pill">
+          <span class="p-emoji">💬</span>
+          <span class="p-name">ChatGPT</span>
+          <span class="p-by">OpenAI · chatgpt.com</span>
+        </a>
+        <a href="https://gemini.google.com" target="_blank" class="platform-pill">
+          <span class="p-emoji">✦</span>
+          <span class="p-name">Gemini</span>
+          <span class="p-by">Google · gemini.google.com</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>

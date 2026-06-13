@@ -1,0 +1,21 @@
+No,Nama Reagen/Bahan,Kategori,Kuantiti Stok,Unit,Tarikh Terima,Tarikh Luput,Lokasi Simpan,Suhu Simpan,Status
+1,Sodium Chloride 0.9%,Larutan,12,botol,2025-01-10,2026-12-31,Rak A1,Suhu Bilik,Aktif
+2,Formalin 10%,Larutan Fiksatif,3,botol,2024-06-15,2026-06-15,Rak A2,Suhu Bilik,Aktif
+3,Antibodi Anti-Rabies,Kit Ujian,0,kit,2024-11-01,2025-05-01,Peti Sejuk 1,2-8°C,Tamat Stok
+4,ELISA Kit - Brucellosis,Kit Ujian,8,kit,2025-03-20,2026-03-20,Peti Sejuk 1,2-8°C,Aktif
+5,Methanol,Pelarut,5,botol,2024-09-05,2025-09-05,Almari Kimia 1,Suhu Bilik,Akan Luput
+6,Phosphate Buffer Saline (PBS),Larutan Penampan,20,botol,2025-02-01,2027-02-01,Rak A1,Suhu Bilik,Aktif
+7,Test Strip Glukosa,Kit Ujian,150,helai,2025-04-10,2026-04-10,Laci B3,Suhu Bilik,Aktif
+8,Antiserum Newcastle Disease,Reagen Diagnostik,2,vial,2024-08-12,2025-02-12,Peti Sejuk 2,2-8°C,Luput
+9,Etanol 70%,Pelarut,15,botol,2025-05-01,2027-05-01,Almari Kimia 1,Suhu Bilik,Aktif
+10,Agar Plate (Blood Agar),Media Kultur,30,plat,2025-05-25,2025-06-25,Peti Sejuk 2,2-8°C,Akan Luput
+11,Kit Ujian Avian Influenza (H5N1),Kit Ujian,4,kit,2025-01-15,2025-07-15,Peti Sejuk 1,2-8°C,Akan Luput
+12,Sarung Tangan Nitril (M),Bekalan Makmal,8,kotak,2025-03-01,2028-03-01,Stor Bekalan,Suhu Bilik,Stok Rendah
+13,Tabung Vacutainer EDTA,Bekalan Makmal,200,unit,2025-04-15,2027-04-15,Stor Bekalan,Suhu Bilik,Aktif
+14,Reagen Hematology Diluent,Reagen,6,botol,2025-02-20,2026-02-20,Rak A3,Suhu Bilik,Aktif
+15,Kit Ujian Mastitis (CMT),Kit Ujian,1,kit,2024-12-01,2025-06-01,Rak A2,Suhu Bilik,Akan Luput
+16,Antibodi Anti-FMD,Kit Ujian,10,kit,2025-05-10,2026-11-10,Peti Sejuk 1,2-8°C,Aktif
+17,Iodine Tincture,Antiseptik,7,botol,2025-01-05,2026-01-05,Almari Kimia 2,Suhu Bilik,Aktif
+18,Hidrogen Peroksida 3%,Antiseptik,4,botol,2024-10-10,2025-04-10,Almari Kimia 2,Suhu Bilik,Luput
+19,Slaid Mikroskop,Bekalan Makmal,500,unit,2025-03-15,2028-03-15,Laci B1,Suhu Bilik,Aktif
+20,Kit Ujian PPR (Peste des Petits Ruminants),Kit Ujian,3,kit,2025-04-01,2025-10-01,Peti Sejuk 1,2-8°C,Aktif
