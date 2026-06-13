@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peta Evolusi AI — Jaringan Neuron</title>
-<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%23ff3da6%22/></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.9/vis-network.min.js"></script>
 <style>
   :root{
     --bg: #0a0e17;
@@ -341,6 +342,65 @@ const network = new vis.Network(container, { nodes, edges }, {
   },
   interaction: { hover:true, tooltipDelay: 100, zoomView:true, dragView:true },
   nodes: { borderWidth: 2, shadow:{enabled:true, color:'rgba(0,0,0,.4)', size:8, x:2, y:2} }
+});
+
+// ---- Cursor feedback (grab / grabbing) ----
+container.style.cursor = 'grab';
+network.on('dragStart', () => container.style.cursor = 'grabbing');
+network.on('dragEnd', () => container.style.cursor = 'grab');
+
+// ---- Hover: highlight node + connected edges, dim the rest ----
+const allNodeIds = nodes.getIds();
+const allEdgeIds = edges.getIds();
+const originalEdgeColors = {};
+edges.forEach(e => originalEdgeColors[e.id] = e.color);
+
+function resetHighlight(){
+  edges.update(allEdgeIds.map(id => ({ id, color: originalEdgeColors[id] })));
+  nodes.update(allNodeIds.map(id => ({ id, opacity: 1 })));
+  container.style.cursor = 'grab';
+}
+
+network.on('hoverNode', (params) => {
+  container.style.cursor = 'pointer';
+  const connected = network.getConnectedEdges(params.node);
+  edges.update(allEdgeIds.map(id => {
+    const isConnected = connected.includes(id);
+    const orig = originalEdgeColors[id];
+    return { id, color: isConnected
+      ? { color: orig.color, opacity: 1 }
+      : { color: orig.color, opacity: 0.08 } };
+  }));
+});
+network.on('blurNode', () => { resetHighlight(); });
+
+// ---- Click: smooth focus/zoom on the clicked node ----
+network.on('click', function(params){
+  if(params.nodes.length > 0){
+    const id = params.nodes[0];
+    openPanel(id);
+    const isMain = (id === 'chatgpt') || id.startsWith('branch');
+    network.focus(id, {
+      scale: isMain ? 1.0 : 1.6,
+      offset: { x: 0, y: 0 },
+      animation: { duration: 600, easingFunction: 'easeInOutQuad' }
+    });
+  } else {
+    closePanel();
+    resetHighlight();
+  }
+});
+
+// pulse animation for the clicked/focused node
+function pulseNode(id){
+  const node = nodes.get(id);
+  const baseSize = node.size || 14;
+  let grown = false;
+  nodes.update({ id, size: baseSize * 1.35 });
+  setTimeout(() => nodes.update({ id, size: baseSize }), 280);
+}
+network.on('click', function(params){
+  if(params.nodes.length > 0) pulseNode(params.nodes[0]);
 });
 
 const panel = document.getElementById('panel');
