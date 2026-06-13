@@ -826,7 +826,7 @@ Warna: guna tema biru dan kuning. Bahasa label: Bahasa Melayu.</div>
         <div class="step-num">1</div>
         <div>
           <h4>Sediakan Google Sheet</h4>
-          <p>Buat Google Sheet dengan struktur lajur yang sama macam <code>dummy-data.csv</code> (atau ringkas: lajur "Kategori" dan "Status" sahaja sudah cukup untuk carta di bawah).</p>
+          <p>Buat Google Sheet dengan struktur lajur yang sama macam <code>dummy-data.csv</code> (atau ringkas: lajur "Kategori" dan "Kuantiti Stok" sahaja sudah cukup untuk carta di bawah).</p>
         </div>
       </div>
       <div class="step-flow-item">
@@ -852,8 +852,8 @@ Warna: guna tema biru dan kuning. Bahasa label: Bahasa Melayu.</div>
         <button class="refresh-btn" onclick="loadLiveData()">🔄 &nbsp;Refresh Data</button>
       </div>
       <div class="live-demo-body">
-        <div style="position: relative; height: 260px;">
-          <canvas id="liveChart"></canvas>
+        <div style="position: relative; height: 520px;">
+          <canvas id="liveChart" role="img" aria-label="Carta bar kuantiti stok bagi setiap reagen/bahan, dibaca terus dari Google Sheet">Kuantiti stok bagi setiap reagen/bahan.</canvas>
         </div>
       </div>
       <div class="live-status" id="liveStatus">Memuatkan data…</div>
@@ -990,51 +990,54 @@ Warna: guna tema biru dan kuning. Bahasa label: Bahasa Melayu.</div>
   // Selagi kosong, carta papar data contoh dari dummy-data.csv sebagai fallback.
   const LIVE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1kXX5CSBOHGttueKWyEpd2c0SINoq-NHKPVLiGz2Orwo/export?format=csv&gid=1933931771';
 
-  const LIVE_FALLBACK_CSV = `Nama,Kategori,Status
-Sodium Chloride 0.9%,Larutan,Aktif
-Formalin 10%,Larutan Fiksatif,Aktif
-Antibodi Anti-Rabies,Kit Ujian,Tamat Stok
-ELISA Kit - Brucellosis,Kit Ujian,Aktif
-Methanol,Pelarut,Akan Luput
-Phosphate Buffer Saline (PBS),Larutan Penampan,Aktif
-Test Strip Glukosa,Kit Ujian,Aktif
-Antiserum Newcastle Disease,Reagen Diagnostik,Luput
-Etanol 70%,Pelarut,Aktif
-Agar Plate (Blood Agar),Media Kultur,Akan Luput
-Kit Ujian Avian Influenza (H5N1),Kit Ujian,Akan Luput
-Sarung Tangan Nitril (M),Bekalan Makmal,Stok Rendah
-Tabung Vacutainer EDTA,Bekalan Makmal,Aktif
-Reagen Hematology Diluent,Reagen,Aktif
-Kit Ujian Mastitis (CMT),Kit Ujian,Akan Luput
-Antibodi Anti-FMD,Kit Ujian,Aktif
-Iodine Tincture,Antiseptik,Aktif
-Hidrogen Peroksida 3%,Antiseptik,Luput
-Slaid Mikroskop,Bekalan Makmal,Aktif
-Kit Ujian PPR (Peste des Petits Ruminants),Kit Ujian,Aktif`;
+  const LIVE_FALLBACK_CSV = `Nama Reagen/Bahan,Kategori,Kuantiti Stok,Status
+Sodium Chloride 0.9%,Larutan,12,Aktif
+Formalin 10%,Larutan Fiksatif,3,Aktif
+Antibodi Anti-Rabies,Kit Ujian,0,Tamat Stok
+ELISA Kit - Brucellosis,Kit Ujian,8,Aktif
+Methanol,Pelarut,5,Akan Luput
+Phosphate Buffer Saline (PBS),Larutan Penampan,20,Aktif
+Test Strip Glukosa,Kit Ujian,150,Aktif
+Antiserum Newcastle Disease,Reagen Diagnostik,2,Luput
+Etanol 70%,Pelarut,15,Aktif
+Agar Plate (Blood Agar),Media Kultur,30,Akan Luput
+Kit Ujian Avian Influenza (H5N1),Kit Ujian,4,Akan Luput
+Sarung Tangan Nitril (M),Bekalan Makmal,8,Stok Rendah
+Tabung Vacutainer EDTA,Bekalan Makmal,200,Aktif
+Reagen Hematology Diluent,Reagen,6,Aktif
+Kit Ujian Mastitis (CMT),Kit Ujian,1,Akan Luput
+Antibodi Anti-FMD,Kit Ujian,10,Aktif
+Iodine Tincture,Antiseptik,7,Aktif
+Hidrogen Peroksida 3%,Antiseptik,4,Luput
+Slaid Mikroskop,Bekalan Makmal,500,Aktif
+Kit Ujian PPR (Peste des Petits Ruminants),Kit Ujian,3,Aktif`;
 
   let liveChartInstance = null;
 
   function renderLiveChart(rows) {
-    const counts = {};
+    const labels = [];
+    const data = [];
     rows.forEach(r => {
-      const kat = (r['Kategori'] || r['kategori'] || '').trim();
-      if (!kat) return;
-      counts[kat] = (counts[kat] || 0) + 1;
+      const nama = (r['Nama Reagen/Bahan'] || r['Nama'] || r['nama'] || '').trim();
+      const qtyRaw = r['Kuantiti Stok'] || r['kuantiti stok'] || r['Kuantiti'] || 0;
+      const qty = parseFloat(String(qtyRaw).replace(',', '.')) || 0;
+      if (!nama) return;
+      labels.push(nama);
+      data.push(qty);
     });
-    const labels = Object.keys(counts);
-    const data = labels.map(l => counts[l]);
 
     if (liveChartInstance) liveChartInstance.destroy();
     liveChartInstance = new Chart(document.getElementById('liveChart'), {
       type: 'bar',
-      data: { labels, datasets: [{ label: 'Bilangan item', data, backgroundColor: '#9B6FE0' }] },
+      data: { labels, datasets: [{ label: 'Kuantiti stok', data, backgroundColor: '#9B6FE0' }] },
       options: {
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { ticks: { autoSkip: false, maxRotation: 45 } },
-          y: { beginAtZero: true, ticks: { precision: 0 } }
+          x: { beginAtZero: true, ticks: { precision: 0 } },
+          y: { ticks: { autoSkip: false, font: { size: 11 } } }
         }
       }
     });
