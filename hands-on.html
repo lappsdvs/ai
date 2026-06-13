@@ -304,6 +304,54 @@
   .platform-pill .p-by { font-size: 11px; color: var(--ink-soft); }
   .pill-claude { border: 1.5px solid var(--clay-yellow); }
 
+  /* ===== LIVE DEMO CARD ===== */
+  .live-demo-card {
+    background: var(--clay-white);
+    border-radius: 22px; overflow: hidden;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 28px;
+  }
+  .live-demo-bar {
+    background: linear-gradient(135deg, #6A3FC4, #9B6FE0);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-family: var(--body); font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .live-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #4CFF8A; box-shadow: 0 0 0 0 rgba(76,255,138,0.6);
+    animation: livepulse 1.6s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes livepulse {
+    0%   { box-shadow: 0 0 0 0 rgba(76,255,138,0.55); }
+    70%  { box-shadow: 0 0 0 8px rgba(76,255,138,0); }
+    100% { box-shadow: 0 0 0 0 rgba(76,255,138,0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot { animation: none; }
+  }
+  .refresh-btn {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--body); font-size: 13px; font-weight: 700;
+    background: rgba(255,255,255,0.18); color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    padding: 7px 14px; border-radius: 50px; cursor: pointer;
+    transition: transform 0.12s, background 0.12s;
+  }
+  .refresh-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-1px); }
+  .refresh-btn:active { transform: translateY(1px); }
+  .live-demo-body { padding: 20px 24px 8px; }
+  .live-status {
+    font-size: 12.5px; color: var(--ink-soft);
+    padding: 0 24px 18px; line-height: 1.6;
+  }
+  .live-status code {
+    background: var(--clay-cream); border: 1px solid var(--line);
+    border-radius: 6px; padding: 1px 6px; font-size: 11.5px;
+  }
+
   /* ===== DOWNLOAD BUTTON ===== */
   .download-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
   .download-btn {
@@ -760,6 +808,65 @@ Warna: guna tema biru dan kuning. Bahasa label: Bahasa Melayu.</div>
   </div>
 </div>
 
+<!-- ================= BONUS: LIVE DEMO ================= -->
+<div id="bahagian-live">
+  <div class="section-wrap">
+
+    <div class="bahagian-header fade-up" style="background: linear-gradient(135deg, #6A3FC4 0%, #9B6FE0 100%);">
+      <div class="bahagian-letter">🔄</div>
+      <div class="bahagian-info">
+        <div class="bahagian-karat">Bonus — Demo Live &nbsp;·&nbsp; ±5 minit</div>
+        <h3>Data Berubah, Carta Pun Berubah — Secara Live!</h3>
+        <p>Carta yang kita buat tadi adalah "gambar" data pada masa prompt dihantar — kalau data sumber bertukar esok, carta tu tak ikut. Tapi dengan sedikit setup, carta boleh "sambung terus" ke Google Sheet — setiap kali dibuka (atau ditekan Refresh), ia tunjuk data <strong>paling terkini</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step-flow fade-up">
+      <div class="step-flow-item">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Sediakan Google Sheet</h4>
+          <p>Buat Google Sheet dengan struktur lajur yang sama macam <code>dummy-data.csv</code> (atau ringkas: lajur "Kategori" dan "Status" sahaja sudah cukup untuk carta di bawah).</p>
+        </div>
+      </div>
+      <div class="step-flow-item">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Publish to Web sebagai CSV</h4>
+          <p>Dalam Google Sheets: <strong>File → Share → Publish to web</strong> → pilih sheet berkenaan → format <strong>CSV</strong> → Publish → copy link yang dihasilkan.</p>
+        </div>
+      </div>
+      <div class="step-flow-item">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Tampal link & tekan Refresh</h4>
+          <p>Fasilitator tampal link CSV tu dalam kod halaman ni (lihat nota di bawah carta). Lepas itu — setiap kali Sheet dikemas kini & butang <strong>🔄 Refresh Data</strong> ditekan, carta terus berubah mengikut data terbaru.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="live-demo-card fade-up">
+      <div class="live-demo-bar">
+        <span class="live-dot"></span>
+        <span>LIVE — carta baca terus dari Google Sheet</span>
+        <button class="refresh-btn" onclick="loadLiveData()">🔄 &nbsp;Refresh Data</button>
+      </div>
+      <div class="live-demo-body">
+        <div style="position: relative; height: 260px;">
+          <canvas id="liveChart"></canvas>
+        </div>
+      </div>
+      <div class="live-status" id="liveStatus">Memuatkan data…</div>
+    </div>
+
+    <div class="callout fade-up">
+      <div class="icon">⚙️</div>
+      <p><strong>Untuk fasilitator:</strong> carta di atas akan cuba baca dari pemboleh ubah <code>LIVE_SHEET_CSV_URL</code> dalam kod halaman ini (cari dalam &lt;script&gt; berkaitan "LIVE DEMO"). Selagi belum ditukar, ia papar data contoh dari <code>dummy-data.csv</code> sebagai fallback. Tukar nilai tu kepada link "Publish to web → CSV" daripada Google Sheet anda sebelum sesi — supaya semasa demo, peserta nampak carta berubah <em>betul-betul live</em> bila anda edit Sheet & tekan Refresh. <strong>Nota privasi:</strong> "Publish to web" bermaksud sesiapa dengan link boleh akses — jangan guna data sulit/rasmi untuk demo ini.</p>
+    </div>
+
+  </div>
+</div>
+
 <!-- ================= BAHAGIAN C ================= -->
 <div id="bahagian-c">
   <div class="section-wrap">
@@ -874,6 +981,96 @@ Warna: guna tema biru dan kuning. Bahasa label: Bahasa Melayu.</div>
   <div class="footer-brand">Workshop Hands-On 🧪</div>
   Disediakan untuk taklimat PM &amp; PPS — Institut Teknologi Unggas, <span>Jabatan Perkhidmatan Veterinar</span>
 </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+  // ===== LIVE DEMO: carta dari Google Sheet (Publish to web > CSV) =====
+  // Fasilitator: tukar nilai di bawah ke link "Publish to web > CSV" dari Google Sheet anda.
+  // Selagi kosong, carta papar data contoh dari dummy-data.csv sebagai fallback.
+  const LIVE_SHEET_CSV_URL = '';
+
+  const LIVE_FALLBACK_CSV = `Nama,Kategori,Status
+Sodium Chloride 0.9%,Larutan,Aktif
+Formalin 10%,Larutan Fiksatif,Aktif
+Antibodi Anti-Rabies,Kit Ujian,Tamat Stok
+ELISA Kit - Brucellosis,Kit Ujian,Aktif
+Methanol,Pelarut,Akan Luput
+Phosphate Buffer Saline (PBS),Larutan Penampan,Aktif
+Test Strip Glukosa,Kit Ujian,Aktif
+Antiserum Newcastle Disease,Reagen Diagnostik,Luput
+Etanol 70%,Pelarut,Aktif
+Agar Plate (Blood Agar),Media Kultur,Akan Luput
+Kit Ujian Avian Influenza (H5N1),Kit Ujian,Akan Luput
+Sarung Tangan Nitril (M),Bekalan Makmal,Stok Rendah
+Tabung Vacutainer EDTA,Bekalan Makmal,Aktif
+Reagen Hematology Diluent,Reagen,Aktif
+Kit Ujian Mastitis (CMT),Kit Ujian,Akan Luput
+Antibodi Anti-FMD,Kit Ujian,Aktif
+Iodine Tincture,Antiseptik,Aktif
+Hidrogen Peroksida 3%,Antiseptik,Luput
+Slaid Mikroskop,Bekalan Makmal,Aktif
+Kit Ujian PPR (Peste des Petits Ruminants),Kit Ujian,Aktif`;
+
+  let liveChartInstance = null;
+
+  function renderLiveChart(rows) {
+    const counts = {};
+    rows.forEach(r => {
+      const kat = (r['Kategori'] || r['kategori'] || '').trim();
+      if (!kat) return;
+      counts[kat] = (counts[kat] || 0) + 1;
+    });
+    const labels = Object.keys(counts);
+    const data = labels.map(l => counts[l]);
+
+    if (liveChartInstance) liveChartInstance.destroy();
+    liveChartInstance = new Chart(document.getElementById('liveChart'), {
+      type: 'bar',
+      data: { labels, datasets: [{ label: 'Bilangan item', data, backgroundColor: '#9B6FE0' }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { autoSkip: false, maxRotation: 45 } },
+          y: { beginAtZero: true, ticks: { precision: 0 } }
+        }
+      }
+    });
+  }
+
+  function useLiveFallback(reason) {
+    const rows = Papa.parse(LIVE_FALLBACK_CSV, { header: true, skipEmptyLines: true }).data;
+    renderLiveChart(rows);
+    const now = new Date().toLocaleTimeString('ms-MY');
+    document.getElementById('liveStatus').innerHTML =
+      `Menggunakan <strong>data contoh (dummy-data.csv)</strong> — ${reason}. Dikemas kini: ${now}`;
+  }
+
+  function loadLiveData() {
+    const statusEl = document.getElementById('liveStatus');
+    statusEl.textContent = 'Memuatkan data…';
+
+    if (!LIVE_SHEET_CSV_URL) {
+      useLiveFallback('fasilitator belum tetapkan <code>LIVE_SHEET_CSV_URL</code>');
+      return;
+    }
+
+    const sep = LIVE_SHEET_CSV_URL.includes('?') ? '&' : '?';
+    fetch(LIVE_SHEET_CSV_URL + sep + 'cb=' + Date.now())
+      .then(res => { if (!res.ok) throw new Error('Network error'); return res.text(); })
+      .then(text => {
+        const rows = Papa.parse(text, { header: true, skipEmptyLines: true }).data;
+        renderLiveChart(rows);
+        const now = new Date().toLocaleTimeString('ms-MY');
+        statusEl.innerHTML = `Data dimuat terus dari Google Sheet. Dikemas kini: <strong>${now}</strong>`;
+      })
+      .catch(() => useLiveFallback('gagal capai Google Sheet (semak link "Publish to web")'));
+  }
+
+  loadLiveData();
+</script>
 
 <script>
   // ===== ACTIVE NAV ON SCROLL =====
