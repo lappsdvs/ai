@@ -172,6 +172,7 @@
   .grid { display: grid; gap: 20px; }
   .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
   .grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 
   .card {
     background: var(--clay-white);
@@ -255,6 +256,36 @@
     border: 1.5px solid rgba(30,79,160,0.2);
     text-decoration: none;
   }
+
+  /* ===== QR MULTI (semua platform) ===== */
+  .qr-multi {
+    background: var(--clay-white);
+    border-radius: 22px; padding: 28px 32px;
+    margin-top: 28px;
+    box-shadow: var(--shadow-card);
+  }
+  .qr-multi-title {
+    font-family: var(--display); font-weight: 700; font-size: 20px;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .qr-multi-sub { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 22px; }
+  .qr-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .qr-card {
+    background: var(--clay-cream); border-radius: 16px; padding: 16px;
+    border: 2px solid var(--line); text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .qr-card .qr-img canvas, .qr-card .qr-img img { border-radius: 8px; display: block; }
+  .qr-card .qr-name { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--ink); }
+  .qr-card .qr-url {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(30,79,160,0.08); color: var(--clay-blue);
+    font-weight: 700; font-size: 12px;
+    padding: 6px 12px; border-radius: 50px;
+    border: 1.5px solid rgba(30,79,160,0.2);
+    text-decoration: none; word-break: break-all;
+  }
+  .qr-card.qr-claude { border-color: var(--clay-yellow); }
 
   /* ===== BEFORE / AFTER ===== */
   .ba-wrap { margin-top: 36px; }
@@ -569,7 +600,7 @@
     <h2>Bukan Cuma Satu AI — Kenal Pemain Utama</h2>
     <p class="lede">Sebelum kita fokus kepada Claude, baik kita kenali dulu beberapa AI assistant popular yang mungkin sudah pernah anda dengar atau guna.</p>
 
-    <div class="grid grid-3">
+    <div class="grid grid-4">
       <div class="card fade-up">
         <span class="badge">01</span>
         <h3>ChatGPT (OpenAI)</h3>
@@ -580,8 +611,13 @@
         <h3>Gemini (Google)</h3>
         <p>Terbina terus dalam Google Workspace — Gmail, Docs, Sheets. Sesuai untuk yang dah biasa guna ekosistem Google dalam kerja harian.</p>
       </div>
-      <div class="card card-featured fade-up">
+      <div class="card fade-up">
         <span class="badge">03</span>
+        <h3>NotebookLM (Google)</h3>
+        <p>Alat AI berasaskan sumber/dokumen sendiri — upload nota atau SOP, ia jana ringkasan, panduan ulang kaji, kuiz, malah audio overview daripada dokumen tersebut.</p>
+      </div>
+      <div class="card card-featured fade-up">
+        <span class="badge">04</span>
         <h3>Claude (Anthropic)</h3>
         <p>Dikenali kuat dalam penulisan, analisis dokumen panjang, dan memahami konteks Bahasa Melayu dengan baik. Fokus kita untuk hands-on hari ini.</p>
       </div>
@@ -626,14 +662,30 @@
     </div>
 
     <!-- 3.1 QR CODE -->
-    <div class="qr-section fade-up">
-      <div class="qr-wrap">
-        <div id="qr-container"></div>
-      </div>
-      <div class="qr-info">
-        <h3>Scan untuk daftar sekarang</h3>
-        <p>Tujukan kamera telefon ke kod QR ini untuk terus ke laman pendaftaran Claude. Percuma, tiada kad kredit diperlukan.</p>
-        <a class="qr-url" href="https://claude.ai" target="_blank" rel="noopener">🔗 claude.ai</a>
+    <div class="qr-multi fade-up">
+      <h3 class="qr-multi-title">Scan untuk mula — pilih platform</h3>
+      <p class="qr-multi-sub">Tujukan kamera telefon ke kod QR platform pilihan anda. Semua percuma, tiada kad kredit diperlukan.</p>
+      <div class="qr-grid">
+        <div class="qr-card qr-claude">
+          <div id="qr-claude" class="qr-img"></div>
+          <div class="qr-name">Claude</div>
+          <a class="qr-url" href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>
+        </div>
+        <div class="qr-card">
+          <div id="qr-chatgpt" class="qr-img"></div>
+          <div class="qr-name">ChatGPT</div>
+          <a class="qr-url" href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a>
+        </div>
+        <div class="qr-card">
+          <div id="qr-gemini" class="qr-img"></div>
+          <div class="qr-name">Gemini</div>
+          <a class="qr-url" href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a>
+        </div>
+        <div class="qr-card">
+          <div id="qr-notebooklm" class="qr-img"></div>
+          <div class="qr-name">NotebookLM</div>
+          <a class="qr-url" href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a>
+        </div>
       </div>
     </div>
   </div>
@@ -926,14 +978,22 @@ Tarikh: 10 Jun 2026
     document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
   }
 
-  // ===== QR CODE =====
-  new QRCode(document.getElementById('qr-container'), {
-    text: 'https://claude.ai',
-    width: 160,
-    height: 160,
-    colorDark: '#0F3576',
-    colorLight: '#FFF8EC',
-    correctLevel: QRCode.CorrectLevel.M
+  // ===== QR CODES (semua platform) =====
+  const qrTargets = [
+    ['qr-claude', 'https://claude.ai'],
+    ['qr-chatgpt', 'https://chatgpt.com'],
+    ['qr-gemini', 'https://gemini.google.com'],
+    ['qr-notebooklm', 'https://notebooklm.google.com'],
+  ];
+  qrTargets.forEach(([id, url]) => {
+    new QRCode(document.getElementById(id), {
+      text: url,
+      width: 120,
+      height: 120,
+      colorDark: '#0F3576',
+      colorLight: '#FFF8EC',
+      correctLevel: QRCode.CorrectLevel.M
+    });
   });
 
   // ===== COPY PROMPT =====
