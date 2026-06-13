@@ -53,6 +53,7 @@
 ```
 index.html              ← Presentation utama (theme 3D Clay + DVS)
 hands-on.html           ← Page baru: Workshop Hands-On
+ai-network.html         ← Page bonus: Peta Evolusi AI (Jaringan Neuron, dark theme)
 assets/
   qr-claude.png         ← QR code daftar claude.ai
   cheatsheet.pdf        ← Senarai prompt siap-pakai (A4)
@@ -83,6 +84,25 @@ assets/
 ### 3.4 Before/After Comparison (dalam "Integrasi")
 - Dua card side-by-side: "Sebelum" (nota mentah) vs "Selepas" (output Claude yang dikemas)
 - Guna contoh sebenar dari kerja makmal DVS
+
+---
+
+## 3.5 Bonus Page: `ai-network.html` — Peta Evolusi AI (Jaringan Neuron)
+
+- Page **berasingan** (tema lain dari clay — dark/cyberpunk neural network), guna `vis.js` (CDN)
+- Konsep: ChatGPT sebagai node pusat ("Mother of Modern AI"), 4 cabang utama (Teks & Asisten, Kreatif & Visual, Produktiviti & Agen, Industri & Sains), setiap cabang ada 3 sub-node detail
+- Interaktif: klik node → panel kanan keluar dengan penjelasan + senarai detail hubungan
+- Palet (cyberpunk dark):
+  | Token | Hex | Guna |
+  |---|---|---|
+  | `--bg` | `#0a0e17` | Background utama |
+  | `--core` | `#ff3da6` | Node pusat (ChatGPT) |
+  | `--c1` | `#36e2ff` | Cabang AI Teks & Asisten |
+  | `--c2` | `#a78bfa` | Cabang AI Kreatif & Visual |
+  | `--c3` | `#4ade80` | Cabang AI Produktiviti & Agen |
+  | `--c4` | `#fbbf24` | Cabang AI Industri & Sains |
+- **Tambah link nav** dalam `index.html` (dan `hands-on.html`) ke `ai-network.html` — label cadangan: "🧠 Peta Evolusi AI" — posisikan selepas section "Skill" sebagai "bonus exploration"
+- File dah siap sedia: `ai-network.html` (single-file, self-contained)
 
 ---
 
@@ -139,6 +159,7 @@ A4, satu muka, senarai 6-8 prompt siap pakai untuk tugasan harian PM/PPS:
 2. **Tambah komponen interaktif** dalam `index.html`: QR section, Cuba Sendiri card, FAQ accordion, Before/After
 3. **Generate QR code** (boleh guna library JS ringan macam `qrcode.js` dari CDN, atau pre-generate PNG)
 4. **Bina `hands-on.html`** ikut struktur Bahagian A/B/C di atas, guna design system sama
+4.5. **Letak `ai-network.html`** (dah siap-sedia, dark/cyberpunk theme — tema lain dari clay sengaja) dalam root repo, tambah nav link "🧠 Peta Evolusi AI" di `index.html` dan `hands-on.html`
 5. **Sediakan `assets/cheatsheet.pdf`** dan `assets/dummy-data.csv`
 6. **Update nav** kat `index.html` untuk link ke `hands-on.html`
 7. Test local (`open index.html`), then `git add . && git commit -m "..." && git push` untuk update GitHub Pages
