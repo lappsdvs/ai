@@ -366,33 +366,33 @@ const lineMaterialCache = {};
 function makeLabelSprite(text, colorHex) {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
-  const fontSize = 34;
+  const fontSize = 22;
   ctx.font = `600 ${fontSize}px Inter, sans-serif`;
   const metrics = ctx.measureText(text);
-  const padding = 16;
+  const padding = 10;
   canvas.width = metrics.width + padding * 2;
   canvas.height = fontSize + padding * 2;
 
   ctx.font = `600 ${fontSize}px Inter, sans-serif`;
-  ctx.fillStyle = 'rgba(6,8,16,0.72)';
+  ctx.fillStyle = 'rgba(6,8,16,0.78)';
   ctx.beginPath();
-  const r = 12;
+  const r = 8;
   const w = canvas.width, h = canvas.height;
   ctx.moveTo(r,0); ctx.arcTo(w,0,w,h,r); ctx.arcTo(w,h,0,h,r); ctx.arcTo(0,h,0,0,r); ctx.arcTo(0,0,w,0,r);
   ctx.closePath(); ctx.fill();
 
   ctx.strokeStyle = colorHex;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 1.5;
   ctx.stroke();
 
   ctx.fillStyle = '#e8ecf7';
   ctx.textBaseline = 'middle';
-  ctx.fillText(text, padding, canvas.height/2 + 2);
+  ctx.fillText(text, padding, canvas.height/2 + 1);
 
   const texture = new THREE.CanvasTexture(canvas);
   const material = new THREE.SpriteMaterial({ map: texture, depthTest: false, transparent: true });
   const sprite = new THREE.Sprite(material);
-  const scale = 0.011;
+  const scale = 0.0042;
   sprite.scale.set(canvas.width * scale, canvas.height * scale, 1);
   return sprite;
 }
@@ -421,7 +421,7 @@ NODES.forEach(node => {
   }
 
   // label sprite, offset slightly outward
-  const labelPos = pos.clone().multiplyScalar(1.12);
+  const labelPos = pos.clone().multiplyScalar(1.07);
   const label = makeLabelSprite(node.label, COLOR_HEX[node.group]);
   label.position.copy(labelPos);
   globeGroup.add(label);
