@@ -17,6 +17,7 @@
     --c5: #ff7a59;   /* AI China */
     --c6: #7dd3fc;   /* Open-Source */
     --c7: #f472b6;   /* Voice & Music */
+    --c8: #fde68a;   /* AI Perintis (Pre-ChatGPT) */
     --text: #e8ecf7;
     --muted: #8a93ab;
     --line: #1f2940;
@@ -185,6 +186,7 @@
   <div class="row"><span class="sw" style="background:var(--c5)"></span> AI China</div>
   <div class="row"><span class="sw" style="background:var(--c6)"></span> Open-Source</div>
   <div class="row"><span class="sw" style="background:var(--c7)"></span> Suara &amp; Muzik</div>
+  <div class="row"><span class="sw" style="background:var(--c8)"></span> AI Perintis (Pre-2022)</div>
 </div>
 
 <div class="controls">
@@ -211,10 +213,11 @@ const COLORS = {
   c5: 0xff7a59,
   c6: 0x7dd3fc,
   c7: 0xf472b6,
+  c8: 0xfde68a,
 };
 const COLOR_HEX = {
   core: '#ff3da6', c1: '#36e2ff', c2: '#a78bfa', c3: '#4ade80',
-  c4: '#fbbf24', c5: '#ff7a59', c6: '#7dd3fc', c7: '#f472b6'
+  c4: '#fbbf24', c5: '#ff7a59', c6: '#7dd3fc', c7: '#f472b6', c8: '#fde68a'
 };
 
 // ---- Node data: lat/lon position on sphere + info ----
@@ -308,6 +311,26 @@ const NODES = [
   { id:'notebooklm', label:'NotebookLM', group:'c7', lat: -30, lon: -135, size: 0.5,
     title: 'NotebookLM (Google)',
     desc: 'Upload dokumen sendiri, Google AI jana ringkasan, kuiz, malah "audio overview" macam podcast dari dokumen tersebut.' },
+
+  // AI Perintis — Sebelum Era ChatGPT (c8)
+  { id:'siri', label:'Siri', group:'c8', lat: 20, lon: -160, size: 0.6,
+    title: 'Siri (Apple)',
+    desc: 'Dilancarkan 2011 — antara pembantu maya pintar pertama yang memahami arahan suara dan membantu carian maklumat. Buka jalan kepada konsep "tanya AI" dalam poket kita.' },
+  { id:'googleassist', label:'Google Assistant', group:'c8', lat: 45, lon: -175, size: 0.6,
+    title: 'Google Assistant',
+    desc: 'Diperkenalkan 2016 — antara AI paling maju pada zamannya untuk kawalan peranti, terjemahan, dan carian web. Asas kepada Gemini hari ini.' },
+  { id:'alexa', label:'Alexa', group:'c8', lat: -5, lon: -175, size: 0.55,
+    title: 'Alexa (Amazon)',
+    desc: 'Dilancarkan 2014 — AI pembantu rumah pintar yang mempopularkan konsep "smart speaker". Bukti AI boleh wujud tanpa skrin.' },
+  { id:'watson', label:'IBM Watson', group:'c8', lat: 55, lon: -155, size: 0.55,
+    title: 'IBM Watson',
+    desc: 'Terkenal 2011 kerana menewaskan juara manusia dalam kuiz Jeopardy! — antara demonstrasi AI paling dramatik sebelum era LLM. Digunakan untuk analisis data perubatan dan perniagaan.' },
+  { id:'dalle', label:'DALL-E', group:'c8', lat: -40, lon: -160, size: 0.5,
+    title: 'DALL-E (OpenAI)',
+    desc: 'Diperkenalkan awal 2022 — sebelum ChatGPT, ia dah tunjukkan AI boleh hasilkan imej realistik dari teks. Precursor kepada gelombang AI visual yang kita kenal hari ini.' },
+  { id:'eliza', label:'ELIZA', group:'c8', lat: 75, lon: -155, size: 0.45,
+    title: 'ELIZA (MIT, 1966)',
+    desc: 'Salah satu program pemprosesan bahasa semula jadi yang PERTAMA di dunia — dicipta 1966 di MIT. Berfungsi seperti ahli psikologi dengan cara tanya-balas mudah. Nenek moyang semua chatbot moden.' },
 ];
 
 // ---- Edges: which nodes connect to ChatGPT (center) ----
@@ -575,7 +598,8 @@ function openPanel(node) {
   document.getElementById('p-eyebrow').textContent =
     node.group === 'core' ? 'Pusat Jaringan' : ({
       c1: 'AI Teks & Asisten', c2: 'AI Kreatif & Visual', c3: 'AI Produktiviti & Agen',
-      c4: 'AI Industri & Sains', c5: 'AI China', c6: 'AI Open-Source', c7: 'AI Suara & Muzik'
+      c4: 'AI Industri & Sains', c5: 'AI China', c6: 'AI Open-Source', c7: 'AI Suara & Muzik',
+      c8: 'AI Perintis — Sebelum Era ChatGPT'
     }[node.group] || 'Detail');
   document.getElementById('p-eyebrow').style.color = COLOR_HEX[node.group];
   document.getElementById('p-title').textContent = node.title;
