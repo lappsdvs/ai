@@ -113,6 +113,18 @@
   }
   #panel h2{ font-size: 21px; font-weight:600; margin-bottom: 12px; line-height:1.25; }
   #panel .desc{ font-size: 14px; line-height:1.6; color: var(--text); opacity:.9; }
+  #p-badge{ margin-bottom: 12px; }
+  .badge{
+    display: inline-flex; align-items:center; gap:6px;
+    font-family: var(--mono); font-size: 11px; font-weight:600;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px;
+    border: 1.5px solid currentColor;
+  }
+  .badge-free{ color: #4ade80; background: rgba(74,222,128,.1); }
+  .badge-freemium{ color: #fbbf24; background: rgba(251,191,36,.1); }
+  .badge-paid{ color: #f87171; background: rgba(248,113,113,.1); }
+  .badge-icon{ font-size: 13px; }
   #panel .close{
     position: absolute; top: 16px; right: 16px;
     width: 28px; height: 28px; border-radius: 50%;
@@ -200,6 +212,7 @@
   <div class="close" onclick="closePanel()">✕</div>
   <div class="eyebrow" id="p-eyebrow">Pusat Jaringan</div>
   <h2 id="p-title">ChatGPT (OpenAI)</h2>
+  <div id="p-badge"></div>
   <div class="desc" id="p-desc"></div>
 </div>
 
@@ -223,112 +236,143 @@ const COLOR_HEX = {
 // ---- Node data: lat/lon position on sphere + info ----
 const NODES = [
   { id:'chatgpt', label:'ChatGPT', group:'core', lat: 0, lon: 0, size: 1.0,
+    access: 'freemium',
     title: 'ChatGPT (OpenAI)',
     desc: 'Dilancarkan November 2022 — proof of concept yang trigger "AI race" global. Hampir semua AI assistant moden mengikut format chat interface yang ditetapkan ChatGPT.' },
 
   // Teks & Asisten (c1)
   { id:'gemini', label:'Gemini', group:'c1', lat: 25, lon: 35, size: 0.6,
+    access: 'free',
     title: 'Gemini (Google)',
     desc: 'Lahir dari "Code Red" Google selepas ChatGPT viral. Terbina terus dalam Gmail, Docs, dan Sheets.' },
   { id:'claude', label:'Claude', group:'c1', lat: -15, lon: 55, size: 0.6,
+    access: 'freemium',
     title: 'Claude (Anthropic)',
     desc: 'Diasaskan bekas penyelidik OpenAI, fokus "Constitutional AI" — pendekatan safety dari awal. Kuat dalam penulisan dan analisis dokumen panjang.' },
   { id:'llama', label:'Llama', group:'c1', lat: 40, lon: 70, size: 0.55,
+    access: 'free',
     title: 'Llama (Meta)',
     desc: 'Open-source — bagi developer dan penyelidik akses penuh kepada bobot model tanpa bergantung API berbayar.' },
   { id:'copilot_chat', label:'M365 Copilot', group:'c1', lat: -35, lon: 25, size: 0.5,
+    access: 'paid',
     title: 'Microsoft 365 Copilot',
     desc: 'AI assistant terbina dalam Word, Excel, Outlook, Teams — bawa GPT terus ke dalam aplikasi pejabat harian.' },
 
   // Kreatif & Visual (c2)
   { id:'midjourney', label:'Midjourney', group:'c2', lat: 10, lon: 120, size: 0.6,
+    access: 'paid',
     title: 'Midjourney',
     desc: 'Text-to-image yang popularkan "prompt engineering" sebagai skill kreatif baru untuk artis digital.' },
   { id:'sd', label:'Stable Diffusion', group:'c2', lat: -20, lon: 145, size: 0.55,
+    access: 'free',
     title: 'Stable Diffusion',
     desc: 'Model imej open-source — sesiapa boleh run di komputer sendiri, mempercepatkan eksperimen AI visual.' },
   { id:'sora', label:'Sora', group:'c2', lat: 35, lon: 110, size: 0.55,
+    access: 'freemium',
     title: 'Sora (OpenAI)',
     desc: 'Sambungan dari pasukan ChatGPT — extend konsep "prompt → output" dari teks ke video.' },
   { id:'runway', label:'Runway', group:'c2', lat: -5, lon: 165, size: 0.5,
+    access: 'freemium',
     title: 'Runway',
     desc: 'Platform video AI untuk kreator — editing, generative video, dan tools produksi kreatif berbantukan AI.' },
 
   // Produktiviti & Agen (c3)
   { id:'ghcopilot', label:'GitHub Copilot', group:'c3', lat: -45, lon: -30, size: 0.6,
+    access: 'freemium',
     title: 'GitHub Copilot',
     desc: 'GPT diaplikasikan untuk auto-lengkap kod — asas kepada "AI pair programmer".' },
   { id:'devin', label:'Devin / Agents', group:'c3', lat: -25, lon: -55, size: 0.55,
+    access: 'paid',
     title: 'Devin & AI Agents',
     desc: 'Evolusi dari chatbot ke agen yang boleh plan, execute, dan betulkan kesilapan sendiri merentas pelbagai langkah.' },
   { id:'n8n', label:'Workflow Automation', group:'c3', lat: 5, lon: -75, size: 0.5,
+    access: 'freemium',
     title: 'AI dalam Automasi Workflow',
     desc: 'Tool macam n8n & Zapier sambungkan LLM terus ke sistem sebenar — email, sheet, database.' },
   { id:'claudecode', label:'Claude Code', group:'c3', lat: -55, lon: -10, size: 0.5,
+    access: 'freemium',
     title: 'Claude Code',
     desc: 'Agentic coding tool dari Anthropic — boleh baca, edit, dan jalankan kod terus dalam terminal/editor.' },
 
   // Industri & Sains (c4)
   { id:'alphafold', label:'AlphaFold', group:'c4', lat: 60, lon: -100, size: 0.55,
+    access: 'free',
     title: 'AlphaFold (DeepMind)',
     desc: 'Selesaikan masalah "protein folding" — bukti deep learning besar boleh tembus domain bukan-bahasa.' },
   { id:'medpalm', label:'Med-PaLM', group:'c4', lat: 30, lon: -130, size: 0.5,
+    access: 'paid',
     title: 'Med-PaLM',
     desc: 'LLM yang di-fine-tune dengan data perubatan — jawab soalan klinikal menghampiri tahap doktor pakar.' },
   { id:'fintech', label:'FinTech AI', group:'c4', lat: 5, lon: -150, size: 0.5,
+    access: 'paid',
     title: 'FinTech AI',
     desc: 'Pattern recognition skala besar untuk kesan penipuan transaksi secara real-time.' },
 
   // AI China (c5)
   { id:'deepseek', label:'DeepSeek', group:'c5', lat: 50, lon: 160, size: 0.6,
+    access: 'free',
     title: 'DeepSeek',
     desc: 'Model open-weight dari China yang dikenali kos latihan rendah berbanding model Barat, prestasi setanding banyak benchmark.' },
   { id:'qwen', label:'Qwen (Alibaba)', group:'c5', lat: 70, lon: 140, size: 0.55,
+    access: 'free',
     title: 'Qwen (Alibaba)',
     desc: 'Siri model bahasa dari Alibaba Cloud — open-source dan widely diadaptasi untuk pelbagai bahasa termasuk serantau Asia.' },
   { id:'ernie', label:'ERNIE (Baidu)', group:'c5', lat: 65, lon: -170, size: 0.5,
+    access: 'freemium',
     title: 'ERNIE (Baidu)',
     desc: 'Model bahasa Baidu yang power chatbot dan search assistant di China — fokus kuat pada Bahasa Mandarin.' },
 
   // Open-Source (c6)
   { id:'huggingface', label:'Hugging Face', group:'c6', lat: -65, lon: 100, size: 0.6,
+    access: 'free',
     title: 'Hugging Face',
     desc: 'Platform hosting model open-source terbesar — ratusan ribu model AI boleh dimuat turun dan adaptasi percuma.' },
   { id:'mistral', label:'Mistral AI', group:'c6', lat: -70, lon: 60, size: 0.55,
+    access: 'freemium',
     title: 'Mistral AI',
     desc: 'Lab AI dari Perancis — fokus model open-weight efisien yang boleh run pada hardware lebih kecil.' },
   { id:'ollama', label:'Ollama', group:'c6', lat: -50, lon: 130, size: 0.5,
+    access: 'free',
     title: 'Ollama',
     desc: 'Tool untuk run model AI open-source terus di komputer sendiri — tanpa cloud, data kekal privat.' },
 
   // Voice & Music (c7)
   { id:'elevenlabs', label:'ElevenLabs', group:'c7', lat: -10, lon: -110, size: 0.55,
+    access: 'freemium',
     title: 'ElevenLabs',
     desc: 'AI text-to-speech yang sangat realistik — digunakan untuk dubbing, audiobook, dan voice clone.' },
   { id:'suno', label:'Suno', group:'c7', lat: 20, lon: -90, size: 0.5,
+    access: 'freemium',
     title: 'Suno',
     desc: 'AI penjana muzik dari teks — tulis lirik dan genre, dapat lagu siap dalam minit.' },
   { id:'notebooklm', label:'NotebookLM', group:'c7', lat: -30, lon: -135, size: 0.5,
+    access: 'free',
     title: 'NotebookLM (Google)',
     desc: 'Upload dokumen sendiri, Google AI jana ringkasan, kuiz, malah "audio overview" macam podcast dari dokumen tersebut.' },
 
   // AI Perintis — Sebelum Era ChatGPT (c8)
   { id:'siri', label:'Siri', group:'c8', lat: 20, lon: -160, size: 0.6,
+    access: 'free',
     title: 'Siri (Apple)',
     desc: 'Dilancarkan 2011 — antara pembantu maya pintar pertama yang memahami arahan suara dan membantu carian maklumat. Buka jalan kepada konsep "tanya AI" dalam poket kita.' },
   { id:'googleassist', label:'Google Assistant', group:'c8', lat: 45, lon: -175, size: 0.6,
+    access: 'free',
     title: 'Google Assistant',
     desc: 'Diperkenalkan 2016 — antara AI paling maju pada zamannya untuk kawalan peranti, terjemahan, dan carian web. Asas kepada Gemini hari ini.' },
   { id:'alexa', label:'Alexa', group:'c8', lat: -5, lon: -175, size: 0.55,
+    access: 'free',
     title: 'Alexa (Amazon)',
     desc: 'Dilancarkan 2014 — AI pembantu rumah pintar yang mempopularkan konsep "smart speaker". Bukti AI boleh wujud tanpa skrin.' },
   { id:'watson', label:'IBM Watson', group:'c8', lat: 55, lon: -155, size: 0.55,
+    access: 'paid',
     title: 'IBM Watson',
     desc: 'Terkenal 2011 kerana menewaskan juara manusia dalam kuiz Jeopardy! — antara demonstrasi AI paling dramatik sebelum era LLM. Digunakan untuk analisis data perubatan dan perniagaan.' },
   { id:'dalle', label:'DALL-E', group:'c8', lat: -40, lon: -160, size: 0.5,
+    access: 'freemium',
     title: 'DALL-E (OpenAI)',
     desc: 'Diperkenalkan awal 2022 — sebelum ChatGPT, ia dah tunjukkan AI boleh hasilkan imej realistik dari teks. Precursor kepada gelombang AI visual yang kita kenal hari ini.' },
   { id:'eliza', label:'ELIZA', group:'c8', lat: 75, lon: -155, size: 0.45,
+    access: 'free',
     title: 'ELIZA (MIT, 1966)',
     desc: 'Salah satu program pemprosesan bahasa semula jadi yang PERTAMA di dunia — dicipta 1966 di MIT. Berfungsi seperti ahli psikologi dengan cara tanya-balas mudah. Nenek moyang semua chatbot moden.' },
 ];
@@ -603,6 +647,19 @@ function openPanel(node) {
     }[node.group] || 'Detail');
   document.getElementById('p-eyebrow').style.color = COLOR_HEX[node.group];
   document.getElementById('p-title').textContent = node.title;
+
+  // Badge
+  const badgeEl = document.getElementById('p-badge');
+  const badgeMap = {
+    free:      { cls:'badge-free',      icon:'✅', label:'PERCUMA (Free)' },
+    freemium:  { cls:'badge-freemium',  icon:'⚡', label:'FREEMIUM' },
+    paid:      { cls:'badge-paid',      icon:'💳', label:'BERBAYAR' },
+  };
+  const b = badgeMap[node.access];
+  badgeEl.innerHTML = b
+    ? `<span class="badge ${b.cls}"><span class="badge-icon">${b.icon}</span>${b.label}</span>`
+    : '';
+
   document.getElementById('p-desc').textContent = node.desc;
   panel.style.setProperty('--accent', COLOR_HEX[node.group]);
   panel.classList.add('open');
